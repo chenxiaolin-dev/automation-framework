@@ -12,7 +12,7 @@ from core.paths import OutputLayout, ROOT
 
 ENV_VAR_PATTERN = re.compile(r"\$\{ENV\.([A-Za-z_][A-Za-z0-9_]*)\}")
 
-
+print(111)#test
 class ConfigError(RuntimeError):
     pass
 
