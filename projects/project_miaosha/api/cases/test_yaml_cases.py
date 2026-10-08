@@ -9,6 +9,7 @@ from engines.api.yaml_runner import run_case
 PROJECT_DIR = Path(__file__).parents[2]
 CASES, IDS = discover_yaml_cases(PROJECT_DIR)
 
+print(111) #例子
 
 @allure.epic("秒杀商城")
 @allure.feature("API")
