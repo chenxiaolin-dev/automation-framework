@@ -1,0 +1,60 @@
+# 商品模块用例：GET /goods/redis/Jlist（秒杀商品列表，只读接口，不产生脏数据）。
+#
+# 实测响应字段（2026-10-01，data[0]）：
+#   {"id":1,"goodsName":...,"goodsPrice":499.0,"miaoshaPrice":298.0,
+#    "goodsStock":10000,"stockCount":100,...}
+#   注意 goodsStock（商品总库存）与 stockCount（本场秒杀库存）是两个不同字段，都在，不是笔误。
+#
+# 已知断言能力缺口：框架当前断言（engines/api/assertions.py）的 expect 只支持字面量/变量，
+# 不支持「用响应里的另一个字段做比较」，所以「秒杀价 <= 原价」暂无法真正断言（见 002 注释）。
+meta:
+  module: "商品"
+  default_method: GET
+
+test_cases:
+  - id: API_GOODS_LIST_001
+    title: "商品列表-正向查询（秒杀商品）"
+    level: p0
+    tags: [smoke]
+    request:
+      path: "/goods/redis/Jlist"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: type, expect: list}
+      - {check: json.data, assert: len_gt, expect: 0}
+      - {check: "json.data[0].id", assert: exists}
+      - {check: "json.data[0].goodsName", assert: not_empty}
+      - {check: "json.data[0].goodsStock", assert: exists}
+
+  - id: API_GOODS_LIST_002
+    title: "商品列表-价格与库存字段取值合理（秒杀价/原价为正、库存非负）"
+    level: p1
+    # ⚠ 标题不再写「秒杀价不高于原价」：框架断言不支持跨字段比较
+    # （miaoshaPrice <= goodsPrice），当前只能各自校验取值区间。
+    # 如需真正校验大小关系：给 engines/api/assertions.py 增加 expect_path（从响应取期望值）后，
+    # 补一条 {check: "json.data[0].miaoshaPrice", assert: le, expect_path: "json.data[0].goodsPrice"}。
+    # 实测基线（2026-10-01）：miaoshaPrice=298.0，goodsPrice=499.0。
+    request:
+      path: "/goods/redis/Jlist"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: type, expect: list}
+      - {check: json.data, assert: len_gt, expect: 0}
+      - {check: "json.data[0].miaoshaPrice", assert: gt, expect: 0}
+      - {check: "json.data[0].miaoshaPrice", assert: le, expect: 99999}
+      - {check: "json.data[0].goodsPrice", assert: gt, expect: 0}
+      - {check: "json.data[0].goodsStock", assert: ge, expect: 0}
+      - {check: "json.data[0].stockCount", assert: ge, expect: 0}
+
+  - id: API_GOODS_LIST_003
+    title: "商品列表-携带 goodsId 参数（服务端忽略该参数，断言从宽）"
+    level: p2
+    request:
+      path: "/goods/redis/Jlist"
+      params: {goodsId: 1}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: type, expect: list}

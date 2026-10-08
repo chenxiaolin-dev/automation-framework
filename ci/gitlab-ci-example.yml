@@ -1,0 +1,33 @@
+# GitLab CI 示例：按方向与环境调度（按需裁剪，放入仓库根目录 .gitlab-ci.yml）
+stages: [test]
+
+.api_base: &api_base
+  stage: test
+  image: python:3.12
+  before_script:
+    - pip install -r requirements.txt
+  artifacts:
+    when: always
+    paths:
+      - allure-results/
+      - logs/
+    expire_in: 7 days
+
+api-test:            # 每次提交：测试环境接口回归（排除离线 demo 用例）
+  <<: *api_base
+  script:
+    - python -m pytest projects/project_a --env test -m "api and not demo" --reruns 2 --alluredir=allure-results/project_a
+
+smoke-prod:          # 定时任务：正式环境线上巡检（Schedule 触发）
+  <<: *api_base
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  script:
+    - python -m pytest projects/project_a --env prod -m smoke --alluredir=allure-results/project_a
+
+ui-test:             # Web UI：官方 playwright 镜像，初期允许失败不阻塞
+  <<: *api_base
+  image: mcr.microsoft.com/playwright/python:v1.45.0
+  allow_failure: true
+  script:
+    - python -m pytest projects/project_a --env test -m ui --alluredir=allure-results/project_a

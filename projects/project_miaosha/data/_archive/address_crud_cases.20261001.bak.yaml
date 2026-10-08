@@ -1,0 +1,124 @@
+# 收货地址 CRUD 依赖链：新增 -> extract 主键 -> 查询 -> 修改 -> 再查 -> 删除 -> 再查确认。
+# 用 depends_on 串联保证执行顺序；被依赖用例 extract 的变量经共享 context（${address_id}）传递。
+# 主键字段为 id（服务端约定），请求格式为表单。
+meta:
+  module: "收货地址-CRUD链路"
+  default_method: POST
+
+variables:
+  province: "广东省"
+  city: "深圳市"
+  district: "南山区"
+
+test_cases:
+  - id: API_CRUD_ADD_001
+    title: "CRUD-新增地址（链路起点）"
+    level: p0
+    tags: [smoke]
+    request:
+      path: "/address/add"
+      data:
+        receiverName: "${fake.name}"
+        receiverPhone: "${fake.phone_number}"
+        province: "${province}"
+        city: "${city}"
+        district: "${district}"
+        detailAddress: "CRUD链路测试${fake.building_number}号"
+        zipCode: "518000"
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: not_empty}
+    extract:
+      address_id: "json.data"
+
+  - id: API_CRUD_QUERY_001
+    title: "CRUD-新增后列表可查询"
+    level: p0
+    depends_on: [API_CRUD_ADD_001]
+    request:
+      method: GET
+      path: "/address/list"
+      params: {page: 1, pageSize: 50}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: type, expect: list}
+    teardown:
+      - action: assert
+        check: context.address_id
+        assert: not_empty
+
+  - id: API_CRUD_UPDATE_001
+    title: "CRUD-修改地址（沿用新增得到的 id）"
+    level: p0
+    depends_on: [API_CRUD_ADD_001]
+    request:
+      path: "/address/update"
+      data:
+        id: "${address_id}"
+        receiverName: "CRUD修改后的收件人"
+        receiverPhone: "${fake.phone_number}"
+        province: "${province}"
+        city: "广州市"
+        district: "天河区"
+        detailAddress: "CRUD修改后地址${fake.building_number}号"
+        zipCode: "510000"
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+
+  - id: API_CRUD_QUERY_002
+    title: "CRUD-修改后再查列表"
+    level: p0
+    depends_on: [API_CRUD_UPDATE_001]
+    request:
+      method: GET
+      path: "/address/list"
+      params: {page: 1, pageSize: 50}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: type, expect: list}
+
+  - id: API_CRUD_DELETE_001
+    title: "CRUD-删除地址（链路清理）"
+    level: p0
+    depends_on: [API_CRUD_QUERY_002]
+    request:
+      path: "/address/delete"
+      data: {id: "${address_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+
+  - id: API_CRUD_QUERY_003
+    title: "CRUD-删除后再查确认（列表接口正常）"
+    level: p0
+    depends_on: [API_CRUD_DELETE_001]
+    request:
+      method: GET
+      path: "/address/list"
+      params: {page: 1, pageSize: 50}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+    teardown:
+      - action: log
+        message: "CRUD 链路结束：地址已在 DELETE 步骤删除，无脏数据残留"
+
+  - id: API_CRUD_MATRIX_001
+    title: "CRUD-列表分页参数矩阵（data_matrix 展开 4 条）"
+    level: p2
+    request:
+      method: GET
+      path: "/address/list"
+      params: {page: "${page}", pageSize: "${size}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+    data_matrix:
+      page: [1, 2]
+      size: [5, 20]

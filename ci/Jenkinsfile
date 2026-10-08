@@ -1,0 +1,33 @@
+// Jenkins 声明式流水线示例（需安装 Allure Jenkins 插件并配置 allure 命令行工具）
+pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'ENV', choices: ['test', 'prod'], description: '运行环境')
+        string(name: 'PROJECT', defaultValue: 'project_a', description: '被测项目目录名')
+        string(name: 'MARK', defaultValue: 'api and not demo', description: 'pytest 标记表达式')
+    }
+
+    stages {
+        stage('Install') {
+            steps {
+                sh 'pip install -r requirements.txt'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh "python -m pytest projects/${params.PROJECT} --env ${params.ENV} " +
+                   "-m \"${params.MARK}\" --reruns 2 --alluredir=allure-results/${params.PROJECT}"
+            }
+        }
+    }
+
+    post {
+        always {
+            allure includeProperties: false,
+                   results: [[path: "allure-results/${params.PROJECT}"]]
+            archiveArtifacts artifacts: 'logs/**, allure-results/**',
+                             allowEmptyArchive: true
+        }
+    }
+}

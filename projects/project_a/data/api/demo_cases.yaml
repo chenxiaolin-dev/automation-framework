@@ -1,0 +1,139 @@
+# 项目A 演示用例：httpbin.org 公共服务，验证引擎全链路（GET/POST/矩阵/extract/依赖）
+meta:
+  module: "演示接口"
+  default_method: GET
+
+variables:
+  echo_prefix: "af_demo"
+
+test_cases:
+  - id: API_DEMO_GET_001
+    title: "GET /get 基础请求与回显"
+    level: p0
+    tags: [smoke]
+    request:
+      path: "/get"
+      params:
+        from: "automation-framework"
+    validate:
+      - check: status_code
+        assert: eq
+        expect: 200
+      - check: json.args.from
+        assert: eq
+        expect: "automation-framework"
+
+  - id: API_DEMO_POST_001
+    title: "POST /post JSON 请求体回显（Faker 动态造数）"
+    level: p0
+    tags: [smoke]
+    request:
+      method: POST
+      path: "/post"
+      json:
+        name: "${fake.name}"
+        phone: "${fake.phone_number}"
+        prefix: "${echo_prefix}"
+    validate:
+      - check: status_code
+        assert: eq
+        expect: 200
+      - check: json.json.name
+        assert: not_empty
+      - check: json.json.phone
+        assert: regex
+        expect: "^1\\d{10}$"
+      - check: json.json.prefix
+        assert: eq
+        expect: "af_demo"
+
+  - id: API_DEMO_STATUS_001
+    title: "非 200 状态码断言 /status/201"
+    level: p2
+    request:
+      path: "/status/201"
+    validate:
+      - check: status_code
+        assert: eq
+        expect: 201
+
+  - id: API_DEMO_HEADER_001
+    title: "响应头断言 /response-headers"
+    level: p2
+    request:
+      path: "/response-headers"
+      params:
+        Content-Type: "application/json"
+    validate:
+      - check: status_code
+        assert: eq
+        expect: 200
+
+  - id: API_DEMO_MATRIX_001
+    title: "data_matrix 数据矩阵展开"
+    level: p2
+    request:
+      path: "/get"
+      params:
+        page: "${page}"
+    validate:
+      - check: status_code
+        assert: eq
+        expect: 200
+      - check: json.args.page
+        assert: eq
+        expect: "${page}"
+    data_matrix:
+      page: ["1", "2", "3"]
+
+  - id: API_DEMO_EXTRACT_001
+    title: "extract 提取请求来源地址"
+    level: p1
+    request:
+      path: "/get"
+    extract:
+      demo_origin: "json.origin"
+    validate:
+      - check: status_code
+        assert: eq
+        expect: 200
+
+  - id: API_DEMO_DEPEND_001
+    title: "depends_on 依赖链：使用上游提取值回显"
+    level: p1
+    depends_on: [API_DEMO_EXTRACT_001]
+    request:
+      path: "/get"
+      params:
+        origin: "${demo_origin}"
+    validate:
+      - check: status_code
+        assert: eq
+        expect: 200
+      - check: json.args.origin
+        assert: eq
+        expect: "${demo_origin}"
+
+  - id: API_DEMO_SETUP_001
+    title: "setup/teardown 动作（set 变量 + 前置请求 + 后置清理）"
+    level: p1
+    setup:
+      - action: set
+        name: demo_tag
+        value: "setup-${echo_prefix}"
+      - action: log
+        message: "准备发起带 tag 的请求"
+    request:
+      path: "/get"
+      params:
+        tag: "${demo_tag}"
+    validate:
+      - check: json.args.tag
+        assert: eq
+        expect: "setup-af_demo"
+    teardown:
+      - action: log
+        message: "演示用例结束，清理上下文"
+      - action: set
+        name: demo_tag
+        value: ""

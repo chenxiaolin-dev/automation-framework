@@ -1,0 +1,36 @@
+# 被测项目A - 正式环境配置（仅供线上冒烟/巡检，禁止跑破坏性用例）
+project: "被测项目A（示例）"
+
+api:
+  base_url: "https://api.example-a.com"
+  timeout: 5
+  public_headers:
+    X-Channel: "autotest"
+    X-Env: "prod"
+  login:
+    path: "/api/v1/login"
+    token_field: "data.token"
+    account_key: "default"
+
+ui:
+  base_url: "https://www.example-a.com"
+  browser: "chromium"
+  headless: true
+  viewport:
+    width: 1366
+    height: 768
+
+app:
+  server_url: "http://127.0.0.1:4723"
+  capabilities:
+    platformName: "Android"
+    automationName: "UiAutomator2"
+    deviceName: "emulator-5554"
+    appPackage: "com.example.appa"
+    appActivity: ".MainActivity"
+    noReset: true
+
+miniprogram:
+  project_path: "./miniapp/dist"
+  cli_path: "C:/Program Files (x86)/Tencent/微信web开发者工具/cli.bat"
+  port: 9420

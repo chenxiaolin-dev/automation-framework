@@ -1,0 +1,12 @@
+# 项目A（演示骨架）- 正式环境配置（用于验证生产环境保护机制）
+project:
+  name: project_a
+
+api:
+  base_url: "https://httpbin.org"
+  timeout: 15
+  headers:
+    Accept: "application/json"
+
+safety:
+  allow_prod_execution: false   # 即使加 --allow-prod 也需显式改为 true 才可执行

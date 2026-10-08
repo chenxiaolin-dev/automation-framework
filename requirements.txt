@@ -1,0 +1,14 @@
+pytest>=8.2.0
+httpx>=0.27.0
+PyYAML>=6.0.1
+loguru>=0.7.2
+allure-pytest>=2.13.5
+Faker>=25.2.0
+jsonschema>=4.20.0
+pytest-rerunfailures>=14.0
+
+# ---- 可选扩展（按测试方向按需安装，未安装时相关引擎用例自动跳过）----
+# playwright>=1.45.0           # Web UI：pip install playwright && playwright install chromium
+# Appium-Python-Client>=4.0    # APP：需本机启动 appium 服务（默认 4723）
+# minium>=1.0.0                # 微信小程序：需微信开发者工具开启自动化端口
+# pymysql>=1.1.0               # 数据库校验（core/data/database.py）

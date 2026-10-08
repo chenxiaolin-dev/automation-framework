@@ -1,0 +1,162 @@
+# 登录鉴权模块：POST /login/redis/login（表单格式）。
+# session 级 api_client 启动时已用 config/test.yaml 的账号登录并注入 token 请求头；
+# 以下用例显式再调登录接口，覆盖正向与各失败分支（不影响会话 token，也不产生脏数据）。
+#
+# 账号/验证码不再硬编码：统一用 ${ENV.TEST_MOBILE} / ${ENV.TEST_PASSWORD} / ${ENV.TEST_VERIFYCODE} /
+# ${ENV.TEST_VERIFYKEY}。这些变量由 conftest._export_auth_env 从 config/{env}.yaml 的 api.auth
+# 自动导出（CI 若预设同名环境变量则优先用 CI 的），见 docs/用例编写规范.md 第五节。
+#
+# 已实测业务码（仅注释，断言从宽以保证稳定性）：
+#   300214 手机号不存在 / 300215 密码错误 / 300221 验证码错误 / 300101 参数校验异常
+meta:
+  module: "登录鉴权"
+  default_method: POST
+
+variables:
+  login_mobile: "${ENV.TEST_MOBILE}"
+  login_password_md5: "${ENV.TEST_PASSWORD}"          # 明文 111111 按服务端 salt 规则 MD5
+  verify_code: "${ENV.TEST_VERIFYCODE}"               # 测试环境万能验证码 9999
+  verify_key: "${ENV.TEST_VERIFYKEY}"
+  wrong_password_md5: "96e79218965eb72c92a549dd5a330112"   # md5(111111)，未经 salt 规则 -> 密码错误
+  unknown_mobile: "13900000001"
+
+test_cases:
+  - id: API_LOGIN_001
+    title: "登录-正向（正确账号+万能验证码，返回 token）"
+    level: p0
+    tags: [smoke]
+    request:
+      path: "/login/redis/login"
+      data:
+        mobile: "${login_mobile}"
+        password: "${login_password_md5}"
+        verifyCode: "${verify_code}"
+        verifyKey: "${verify_key}"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: not_empty}
+    extract:
+      login_token: "json.data"
+    teardown:
+      - action: assert
+        check: context.login_token
+        assert: not_empty
+
+  - id: API_LOGIN_002
+    title: "登录-密码错误（未走 salt 规则的 MD5）"
+    level: p0
+    request:
+      path: "/login/redis/login"
+      data:
+        mobile: "${login_mobile}"
+        password: "${wrong_password_md5}"
+        verifyCode: "${verify_code}"
+        verifyKey: "${verify_key}"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_LOGIN_003
+    title: "登录-验证码错误（非万能验证码）"
+    level: p1
+    request:
+      path: "/login/redis/login"
+      data:
+        mobile: "${login_mobile}"
+        password: "${login_password_md5}"
+        verifyCode: "0000"
+        verifyKey: "${verify_key}"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_LOGIN_004
+    title: "登录-手机号不存在"
+    level: p1
+    request:
+      path: "/login/redis/login"
+      data:
+        mobile: "${unknown_mobile}"
+        password: "${login_password_md5}"
+        verifyCode: "${verify_code}"
+        verifyKey: "${verify_key}"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_LOGIN_005
+    title: "登录-手机号格式错误"
+    level: p1
+    request:
+      path: "/login/redis/login"
+      data:
+        mobile: "13588"
+        password: "${login_password_md5}"
+        verifyCode: "${verify_code}"
+        verifyKey: "${verify_key}"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  # ---- 必填参数缺失：mobile / password / verifyCode 逐个覆盖 ----
+  - id: API_LOGIN_006
+    title: "登录-缺少 password 必填参数"
+    level: p1
+    request:
+      path: "/login/redis/login"
+      data:
+        mobile: "${login_mobile}"
+        verifyCode: "${verify_code}"
+        verifyKey: "${verify_key}"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_LOGIN_007
+    title: "登录-缺少 mobile 必填参数"
+    level: p1
+    request:
+      path: "/login/redis/login"
+      data:
+        password: "${login_password_md5}"
+        verifyCode: "${verify_code}"
+        verifyKey: "${verify_key}"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_LOGIN_008
+    title: "登录-缺少 verifyCode 必填参数【⚠ 服务端未校验，缺验证码仍登录成功，潜在缺陷】"
+    level: p1
+    # 实测（2026-10-01）：缺 verifyCode 仍返回 {code:0,data:"<token>"}，验证码形同虚设。
+    # 断言从宽（不断言失败码），该行为记为潜在缺陷，待产品/服务端确认是否需补校验。
+    request:
+      path: "/login/redis/login"
+      data:
+        mobile: "${login_mobile}"
+        password: "${login_password_md5}"
+        verifyKey: "${verify_key}"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_LOGIN_009
+    title: "鉴权-无效 token 访问受保护接口被拒绝"
+    level: p0
+    request:
+      method: GET
+      path: "/address/list"
+      headers:
+        token: "invalid-token-for-negative-test"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}

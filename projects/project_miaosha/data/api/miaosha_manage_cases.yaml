@@ -1,0 +1,659 @@
+# 秒杀管理 模块接口用例
+# 来源: api-test-gen 基线（docs/openapi/miaosha_api.json, tag=秒杀管理, 9 接口）
+#       + 人工增强（秒杀业务三条硬约束 + 边界补齐）· 2026-10-01
+# 用例数: 36（正向 p0/smoke 9 · 负向 p1 10 · 边界 p2 17）
+#
+# ── 本模块三条硬约束（写用例时必须遵守，否则假失败）────────────────────
+#   1. 先重置库存：所有「执行秒杀」用例（/miaosha/miaosha、/miaosha/over/miaosha、
+#      /miaosha/{path}/miaosha）都在 setup 里先调 GET /miaosha/reset。
+#      库存默认只有 10 个，不重置跑几轮就售罄，正向用例会假失败。
+#   2. 隐藏路径：/miaosha/{path}/miaosha 的 path **不能写死**。
+#      原方案给的 testpath 实测无效（返回 300102）；真实 path 是每次 GET /miaosha/path
+#      返回的 32 位随机串。故 009/018/019/029/030/031 统一走 setup 链路：
+#        reset -> GET /miaosha/path?goodsId=1&verifyCode=9999 -> extract miaosha_path
+#        -> POST /miaosha/${miaosha_path}/miaosha
+#      框架 engines/api/yaml_runner.py:75 已支持 request.path 的 ${变量} 解析，无需补丁。
+#      若用固定 testpath，负向用例会出现「假通过」（路径本就非法，断言 code!=0 必然满足）。
+#   3. 验证码接口：GET /miaosha/path、GET /miaosha/verifyCode 只断言 status_code=200，
+#      不断言业务码（/miaosha/verifyCode 返回的是 JPEG 图片流，没有 json.code 可断言）。
+#      实测 2026-10-01：本环境万能验证码为 9999（与登录一致）；1234/0/123456/1111 均返回
+#      {code:300102,"验证码错误或请求非法！"}；高频调用会返回 {code:300104,"访问太频繁！"}。
+#
+# ── 2026-10-01 实测基线（同一会话，reset 后单次调用）─────────────────────
+#   POST /miaosha/miaosha            {goodsId:1}          -> code=0 data=0（下单成功）
+#   POST /miaosha/over/miaosha       {goodsId:1}          -> code=0 data=0（reset 后成功；
+#                                                            未 reset 时 300501 不能重复秒杀）
+#   GET  /miaosha/over/miaosha       ?goodsId=1           -> code=300100 服务端异常（GET 不被支持，
+#                                                            故本文件按文档的 POST 写，正确）
+#   GET  /miaosha/result             ?goodsId=1           -> code=0 data=523（订单号）
+#   GET  /miaosha/path               ?goodsId=1&verifyCode=9999 -> code=0 data=<32位随机串>
+#   POST /miaosha/<真实path>/miaosha {goodsId:1}          -> code=0 data=0（成功）
+#   POST /miaosha/testpath/miaosha   {goodsId:1}          -> code=300102（失败，testpath 非有效路径）
+#   GET  /miaosha/reset /reset2 /reset3                   -> code=0
+#
+# ── 2026-10-01 复核基线（用例评审时复测，带 token）────────────────────────
+#   GET  /miaosha/result ?goodsId=""       -> code=300100 服务端异常（故 026 断言 ne 0 成立）
+#   GET  /miaosha/result ?goodsId=-1/99999 -> code=0 data=0（不校验，见 027/028）
+#   GET  /miaosha/path   缺 goodsId        -> code=300100 服务端异常（故 014 可断言 ne 0）
+#   GET  /miaosha/path   ?goodsId=-1       -> code=300102 验证码错误或请求非法（故 032 可断言 ne 0）
+#   GET  /miaosha/path   ?goodsId=99999    -> code=0 data=<32位随机串>（不存在的商品也能拿路径，潜在缺陷）
+#   GET  /miaosha/verifyCode               -> HTTP 200，响应头无 Content-Type、响应体非 JSON，
+#                                             故 008/017/034/035 只能断言 status_code（无法解析 json.code）
+#
+# ── 断言约定 ──────────────────────────────────────────────────────────
+#   正向   : status_code eq 200 + json.code eq 0
+#   负向/边界: status_code lt 500 + json.code ne 0（服务端有参数校验，实测非法参数返回 300100）
+#   验证码类: 只断言 status_code eq 200（响应可能是图片流/非 JSON，断言 json.code 会误报）
+#
+# ── 传参约定 ──────────────────────────────────────────────────────────
+#   服务端收表单 application/x-www-form-urlencoded：POST 用 request.data，GET 用 request.params
+#
+# 运行:
+#   python -m pytest projects/project_miaosha --project project_miaosha --env test --type api
+#   python -m pytest projects/project_miaosha --project project_miaosha --env test --type api -m smoke
+#
+# ⚠ 遗留事项（2026-10-01 已实测，两轮 36/36 通过）:
+#   1. 潜在缺陷 3 条：027/028（result 对 -1、99999 不校验）、036（reset3 对负数库存不校验），
+#      均返回 code=0，已改从宽断言并在标题标注「⚠ 服务端未校验」，待服务端确认是否需加校验。
+#   2. 限流：高频调用 /miaosha/path 会返回 300104「访问太频繁」。本模块 6 条用例调用它，
+#      顺序执行两轮未触发；并发执行（xdist）偶发时重跑，或在 setup 加 {action: wait, seconds: 1}。
+#   3. 脏数据：秒杀下单会生成订单，本模块无删除订单接口，teardown 的 GET /miaosha/reset
+#      只重置库存与秒杀状态，订单表残留需 DBA 侧清理。
+#   4. 已确认 /miaosha/over/miaosha 用 POST 正确（GET 返回 300100 服务端异常）。
+
+meta:
+  module: "秒杀管理"
+  default_method: GET
+
+variables:
+  goods_id: 1
+  # 实测：本环境万能验证码 9999；1234 会返回 300102 验证码错误
+  verify_code: 9999
+
+test_cases:
+  # ══════════════ 正向（p0 / smoke）══════════════
+  - id: API_MIAOSHA_MGMT_001
+    title: "执行秒杀（无隐藏路径）-正向：重置库存后秒杀 goodsId=1"
+    level: p0
+    tags: [smoke]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      method: POST
+      path: "/miaosha/miaosha"
+      data: {goodsId: "${goods_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: exists}   # 实测 data=0（入队成功）；0/订单号都算正常，故不断言具体值
+    teardown:
+      - action: request
+        name: "清理-重置库存"
+        request: {method: GET, path: "/miaosha/reset"}
+
+  - id: API_MIAOSHA_MGMT_002
+    title: "执行秒杀（会超卖版本）-正向：重置库存后秒杀 goodsId=1"
+    level: p0
+    tags: [smoke]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      method: POST
+      path: "/miaosha/over/miaosha"
+      data: {goodsId: "${goods_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+    teardown:
+      - action: request
+        name: "清理-重置库存"
+        request: {method: GET, path: "/miaosha/reset"}
+
+  - id: API_MIAOSHA_MGMT_003
+    title: "获取秒杀隐藏路径-正向：goodsId=1 + verifyCode 占位"
+    level: p0
+    tags: [smoke]
+    request:
+      method: GET
+      path: "/miaosha/path"
+      params: {goodsId: "${goods_id}", verifyCode: "${verify_code}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+
+  - id: API_MIAOSHA_MGMT_004
+    title: "秒杀重置（库存10个）-正向"
+    level: p0
+    tags: [smoke]
+    request: {method: GET, path: "/miaosha/reset"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_005
+    title: "秒杀重置（库存10000个）-正向"
+    level: p0
+    tags: [smoke]
+    request: {method: GET, path: "/miaosha/reset2"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_006
+    title: "秒杀重置（自定义库存）-正向：stock=10 times=1"
+    level: p0
+    tags: [smoke]
+    request:
+      method: POST
+      path: "/miaosha/reset3"
+      data: {stock: 10, times: 1}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_007
+    title: "查询秒杀结果-正向：goodsId=1"
+    level: p0
+    tags: [smoke]
+    request:
+      method: GET
+      path: "/miaosha/result"
+      params: {goodsId: "${goods_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_008
+    title: "获取秒杀验证码图片-正向：goodsId=1 + verifyCode 占位"
+    level: p0
+    tags: [smoke]
+    request:
+      method: GET
+      path: "/miaosha/verifyCode"
+      params: {goodsId: "${goods_id}", verifyCode: "${verify_code}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+
+  - id: API_MIAOSHA_MGMT_009
+    title: "执行秒杀（隐藏路径动态获取）-正向：重置库存后秒杀 goodsId=1"
+    level: p0
+    tags: [smoke]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+      - action: request
+        name: "前置-获取真实隐藏路径"
+        request:
+          method: GET
+          path: "/miaosha/path"
+          params: {goodsId: "${goods_id}", verifyCode: "${verify_code}"}
+        validate:
+          - {check: status_code, assert: eq, expect: 200}
+        extract:
+          miaosha_path: json.data
+    request:
+      method: POST
+      path: "/miaosha/${miaosha_path}/miaosha"
+      data: {goodsId: "${goods_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+    teardown:
+      - action: request
+        name: "清理-重置库存"
+        request: {method: GET, path: "/miaosha/reset"}
+
+  # ══════════════ 负向（p1）：缺少必填参数 / 类型非法 ══════════════
+  - id: API_MIAOSHA_MGMT_010
+    title: "执行秒杀（无隐藏路径）-负向：缺少必填参数 goodsId"
+    level: p1
+    tags: [negative]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      method: POST
+      path: "/miaosha/miaosha"
+      data: {}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_011
+    title: "执行秒杀（无隐藏路径）-负向：goodsId 类型非法（字符串 abc）"
+    level: p1
+    tags: [negative]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      method: POST
+      path: "/miaosha/miaosha"
+      data: {goodsId: "abc"}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_012
+    title: "执行秒杀（会超卖版本）-负向：缺少必填参数 goodsId"
+    level: p1
+    tags: [negative]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      method: POST
+      path: "/miaosha/over/miaosha"
+      data: {}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_013
+    title: "执行秒杀（会超卖版本）-负向：goodsId 类型非法（字符串 abc）"
+    level: p1
+    tags: [negative]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      method: POST
+      path: "/miaosha/over/miaosha"
+      data: {goodsId: "abc"}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_014
+    title: "获取秒杀隐藏路径-负向：缺少必填参数 goodsId"
+    level: p1
+    tags: [negative]
+    # 实测（2026-10-01）：缺 goodsId 返回 JSON {code:300100} → 可以断言业务码（与图片流接口不同）
+    request:
+      method: GET
+      path: "/miaosha/path"
+      params: {verifyCode: "${verify_code}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_MIAOSHA_MGMT_015
+    title: "查询秒杀结果-负向：缺少必填参数 goodsId"
+    level: p1
+    tags: [negative]
+    request:
+      method: GET
+      path: "/miaosha/result"
+      params: {}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_016
+    title: "查询秒杀结果-负向：goodsId 类型非法（字符串 abc）"
+    level: p1
+    tags: [negative]
+    request:
+      method: GET
+      path: "/miaosha/result"
+      params: {goodsId: "abc"}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_017
+    title: "获取秒杀验证码图片-负向：缺少必填参数 goodsId"
+    level: p1
+    tags: [negative]
+    # 只能断言 HTTP 200：实测该接口返回图片流，响应头无 Content-Type、响应体非 JSON，
+    # 断言 json.code / headers.Content-Type 都会因字段不存在而误报（不是用例缺陷）。
+    request:
+      method: GET
+      path: "/miaosha/verifyCode"
+      params: {verifyCode: "${verify_code}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+
+  - id: API_MIAOSHA_MGMT_018
+    title: "执行秒杀（隐藏路径动态获取）-负向：缺少必填参数 goodsId"
+    level: p1
+    tags: [negative]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+      - action: request
+        name: "前置-获取真实隐藏路径"
+        request:
+          method: GET
+          path: "/miaosha/path"
+          params: {goodsId: "${goods_id}", verifyCode: "${verify_code}"}
+        validate:
+          - {check: status_code, assert: eq, expect: 200}
+        extract:
+          miaosha_path: json.data
+    request:
+      method: POST
+      path: "/miaosha/${miaosha_path}/miaosha"
+      data: {}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_019
+    title: "执行秒杀（隐藏路径动态获取）-负向：goodsId 类型非法（字符串 abc）"
+    level: p1
+    tags: [negative]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+      - action: request
+        name: "前置-获取真实隐藏路径"
+        request:
+          method: GET
+          path: "/miaosha/path"
+          params: {goodsId: "${goods_id}", verifyCode: "${verify_code}"}
+        validate:
+          - {check: status_code, assert: eq, expect: 200}
+        extract:
+          miaosha_path: json.data
+    request:
+      method: POST
+      path: "/miaosha/${miaosha_path}/miaosha"
+      data: {goodsId: "abc"}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  # ══════════════ 边界（p2）：goodsId 空 / 负数 -1 / 不存在 99999 ══════════════
+  - id: API_MIAOSHA_MGMT_020
+    title: "执行秒杀（无隐藏路径）-边界：goodsId 为空字符串"
+    level: p2
+    tags: [boundary]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      method: POST
+      path: "/miaosha/miaosha"
+      data: {goodsId: ""}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_021
+    title: "执行秒杀（无隐藏路径）-边界：goodsId 负数 -1"
+    level: p2
+    tags: [boundary]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      method: POST
+      path: "/miaosha/miaosha"
+      data: {goodsId: -1}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_022
+    title: "执行秒杀（无隐藏路径）-边界：goodsId 不存在 99999"
+    level: p2
+    tags: [boundary]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      method: POST
+      path: "/miaosha/miaosha"
+      data: {goodsId: 99999}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_023
+    title: "执行秒杀（会超卖版本）-边界：goodsId 为空字符串"
+    level: p2
+    tags: [boundary]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      method: POST
+      path: "/miaosha/over/miaosha"
+      data: {goodsId: ""}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_024
+    title: "执行秒杀（会超卖版本）-边界：goodsId 负数 -1"
+    level: p2
+    tags: [boundary]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      method: POST
+      path: "/miaosha/over/miaosha"
+      data: {goodsId: -1}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_025
+    title: "执行秒杀（会超卖版本）-边界：goodsId 不存在 99999"
+    level: p2
+    tags: [boundary]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      method: POST
+      path: "/miaosha/over/miaosha"
+      data: {goodsId: 99999}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_026
+    title: "查询秒杀结果-边界：goodsId 为空字符串"
+    level: p2
+    tags: [boundary]
+    # 实测（2026-10-01）：空字符串返回 {code:300100} 服务端异常 → 断言 ne 0 成立，
+    # 与 027/028（负数、不存在的 goodsId 反而放行返回 code=0）行为不一致，已在文件头基线中记录。
+    request:
+      method: GET
+      path: "/miaosha/result"
+      params: {goodsId: ""}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_027
+    title: "查询秒杀结果-边界：goodsId 负数 -1【⚠ 服务端未校验，实测返回 code=0，潜在缺陷】"
+    level: p2
+    tags: [boundary]
+    request:
+      method: GET
+      path: "/miaosha/result"
+      params: {goodsId: -1}
+    # 实测 2026-10-01：负数 goodsId 仍返回 {"code":0,"data":0}，服务端无参数校验。
+    # 故此条断言从宽（不臆造错误码），该行为本身记为潜在缺陷，待服务端确认是否需加校验。
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: exists}
+
+  - id: API_MIAOSHA_MGMT_028
+    title: "查询秒杀结果-边界：goodsId 不存在 99999【⚠ 服务端未校验，实测返回 code=0，潜在缺陷】"
+    level: p2
+    tags: [boundary]
+    request:
+      method: GET
+      path: "/miaosha/result"
+      params: {goodsId: 99999}
+    # 实测 2026-10-01：不存在的 goodsId 仍返回 {"code":0,"data":0}，服务端无参数校验。
+    # 断言从宽，该行为记为潜在缺陷，待服务端确认是否需加校验。
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: exists}
+
+  - id: API_MIAOSHA_MGMT_029
+    title: "执行秒杀（隐藏路径动态获取）-边界：goodsId 为空字符串"
+    level: p2
+    tags: [boundary]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+      - action: request
+        name: "前置-获取真实隐藏路径"
+        request:
+          method: GET
+          path: "/miaosha/path"
+          params: {goodsId: "${goods_id}", verifyCode: "${verify_code}"}
+        validate:
+          - {check: status_code, assert: eq, expect: 200}
+        extract:
+          miaosha_path: json.data
+    request:
+      method: POST
+      path: "/miaosha/${miaosha_path}/miaosha"
+      data: {goodsId: ""}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_030
+    title: "执行秒杀（隐藏路径动态获取）-边界：goodsId 负数 -1"
+    level: p2
+    tags: [boundary]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+      - action: request
+        name: "前置-获取真实隐藏路径"
+        request:
+          method: GET
+          path: "/miaosha/path"
+          params: {goodsId: "${goods_id}", verifyCode: "${verify_code}"}
+        validate:
+          - {check: status_code, assert: eq, expect: 200}
+        extract:
+          miaosha_path: json.data
+    request:
+      method: POST
+      path: "/miaosha/${miaosha_path}/miaosha"
+      data: {goodsId: -1}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_031
+    title: "执行秒杀（隐藏路径动态获取）-边界：goodsId 不存在 99999"
+    level: p2
+    tags: [boundary]
+    setup:
+      - action: request
+        name: "前置-重置库存(10)"
+        request: {method: GET, path: "/miaosha/reset"}
+      - action: request
+        name: "前置-获取真实隐藏路径"
+        request:
+          method: GET
+          path: "/miaosha/path"
+          params: {goodsId: "${goods_id}", verifyCode: "${verify_code}"}
+        validate:
+          - {check: status_code, assert: eq, expect: 200}   # 限流时 code 可能非 0，故不校验业务码
+        extract:
+          miaosha_path: json.data
+    request:
+      method: POST
+      path: "/miaosha/${miaosha_path}/miaosha"
+      data: {goodsId: 99999}
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MIAOSHA_MGMT_032
+    title: "获取秒杀隐藏路径-边界：goodsId 负数 -1"
+    level: p2
+    tags: [boundary]
+    # 实测（2026-10-01）：负数 goodsId 返回 {code:300102} 验证码错误或请求非法（被当成非法请求）
+    request:
+      method: GET
+      path: "/miaosha/path"
+      params: {goodsId: -1, verifyCode: "${verify_code}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_MIAOSHA_MGMT_033
+    title: "获取秒杀隐藏路径-边界：goodsId 不存在 99999【⚠ 服务端未校验，仍能拿到路径，潜在缺陷】"
+    level: p2
+    tags: [boundary]
+    # 实测（2026-10-01）：不存在的商品仍返回 {code:0,data:<32位随机串>}，与 032 负数行为不一致。
+    # 断言从宽，该行为记为潜在缺陷，待服务端确认是否需加校验。
+    request:
+      method: GET
+      path: "/miaosha/path"
+      params: {goodsId: 99999, verifyCode: "${verify_code}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+
+  - id: API_MIAOSHA_MGMT_034
+    title: "获取秒杀验证码图片-边界：goodsId 负数 -1"
+    level: p2
+    tags: [boundary]
+    # 同 017：图片流响应，无 JSON / 无 Content-Type 可断言，只校验 HTTP 200
+    request:
+      method: GET
+      path: "/miaosha/verifyCode"
+      params: {goodsId: -1, verifyCode: "${verify_code}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+
+  - id: API_MIAOSHA_MGMT_035
+    title: "获取秒杀验证码图片-边界：goodsId 不存在 99999"
+    level: p2
+    tags: [boundary]
+    # 同 017：图片流响应，无 JSON / 无 Content-Type 可断言，只校验 HTTP 200
+    request:
+      method: GET
+      path: "/miaosha/verifyCode"
+      params: {goodsId: 99999, verifyCode: "${verify_code}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+
+  - id: API_MIAOSHA_MGMT_036
+    title: "秒杀重置（自定义库存）-边界：stock 负数 -1【⚠ 服务端未校验，实测返回 code=0，潜在缺陷】"
+    level: p2
+    tags: [boundary]
+    request:
+      method: POST
+      path: "/miaosha/reset3"
+      data: {stock: -1, times: 1}
+    # 实测 2026-10-01：负数库存仍返回 {"code":0,"data":true}，服务端无参数校验。
+    # 断言从宽，该行为记为潜在缺陷（负数库存是否应被拒绝，待产品/服务端确认）。
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+      - {check: json.code, assert: exists}

@@ -1,0 +1,74 @@
+{
+  "ok": true,
+  "project": "project_miaosha",
+  "framework_dir": "D:\\PyCharm\\automation-framework",
+  "source": "docs\\openapi\\miaosha_api.json",
+  "skipped_deprecated": 0,
+  "modules": {
+    "miaosha_manage": {
+      "tag": "秒杀管理",
+      "cn_name": "秒杀管理",
+      "file": "data/api/miaosha_manage_cases.yaml",
+      "stats": {
+        "total": 21,
+        "positive": 9,
+        "negative": 12,
+        "boundary": 0
+      },
+      "ids": [
+        "API_MIAOSHA_MGMT_MGMT_001",
+        "API_MIAOSHA_MGMT_MGMT_002",
+        "API_MIAOSHA_MGMT_MGMT_003",
+        "API_MIAOSHA_MGMT_MGMT_004",
+        "API_MIAOSHA_MGMT_MGMT_005",
+        "API_MIAOSHA_MGMT_MGMT_006",
+        "API_MIAOSHA_MGMT_MGMT_007",
+        "API_MIAOSHA_MGMT_MGMT_008",
+        "API_MIAOSHA_MGMT_MGMT_009",
+        "API_MIAOSHA_MGMT_MGMT_010",
+        "API_MIAOSHA_MGMT_MGMT_011",
+        "API_MIAOSHA_MGMT_MGMT_012",
+        "API_MIAOSHA_MGMT_MGMT_013",
+        "API_MIAOSHA_MGMT_MGMT_014",
+        "API_MIAOSHA_MGMT_MGMT_015",
+        "API_MIAOSHA_MGMT_MGMT_016",
+        "API_MIAOSHA_MGMT_MGMT_017",
+        "API_MIAOSHA_MGMT_MGMT_018",
+        "API_MIAOSHA_MGMT_MGMT_019",
+        "API_MIAOSHA_MGMT_MGMT_020",
+        "API_MIAOSHA_MGMT_MGMT_021"
+      ]
+    }
+  },
+  "totals": {
+    "total": 21,
+    "positive": 9,
+    "negative": 12,
+    "boundary": 0
+  },
+  "written": [
+    "D:\\PyCharm\\automation-framework\\projects\\project_miaosha\\data\\api\\miaosha_manage_cases.yaml"
+  ],
+  "refused": [
+    "D:\\PyCharm\\automation-framework\\projects\\project_miaosha\\config\\test.yaml",
+    "D:\\PyCharm\\automation-framework\\projects\\project_miaosha\\api\\cases\\test_yaml_cases.py",
+    "D:\\PyCharm\\automation-framework\\projects\\project_miaosha\\data\\api\\.gitkeep",
+    "D:\\PyCharm\\automation-framework\\projects\\project_miaosha\\__init__.py",
+    "D:\\PyCharm\\automation-framework\\projects\\project_miaosha\\api\\__init__.py",
+    "D:\\PyCharm\\automation-framework\\projects\\project_miaosha\\api\\cases\\__init__.py"
+  ],
+  "report": "D:\\PyCharm\\automation-framework\\projects\\project_miaosha\\data\\api\\_apigen_report.md",
+  "notes": [
+    "POST /miaosha/miaosha 未声明长度/数值/枚举约束，未生成边界用例",
+    "POST /miaosha/over/miaosha 未声明长度/数值/枚举约束，未生成边界用例",
+    "GET /miaosha/path 未声明长度/数值/枚举约束，未生成边界用例",
+    "GET /miaosha/reset 未声明长度/数值/枚举约束，未生成边界用例",
+    "GET /miaosha/reset2 未声明长度/数值/枚举约束，未生成边界用例",
+    "POST /miaosha/reset3 未声明长度/数值/枚举约束，未生成边界用例",
+    "GET /miaosha/result 未声明长度/数值/枚举约束，未生成边界用例",
+    "GET /miaosha/verifyCode 未声明长度/数值/枚举约束，未生成边界用例",
+    "POST /miaosha/{path}/miaosha 未声明长度/数值/枚举约束，未生成边界用例",
+    "框架已支持 request.path 变量解析，路径参数用例可直接运行"
+  ],
+  "warnings": []
+}

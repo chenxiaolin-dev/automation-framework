@@ -1,0 +1,176 @@
+# 秒杀业务用例（表单格式）。
+# 服务端约定（已实测）：
+#   - GET  /miaosha/reset              重置秒杀库存与状态（测试辅助接口，正向用例前置调用）
+#   - POST /miaosha/miaosha            秒杀下单，表单参数 goodsId
+#   - GET  /miaosha/result?goodsId=1   秒杀结果轮询（0=排队中 / >0 订单号 / -1 失败）
+#   - GET  /miaosha/over/miaosha       秒杀结束页接口（服务端自身异常，已知缺陷，断言从宽）
+#   - POST /miaosha/testpath/miaosha   需验证码的接口（无验证码时拒绝，断言从宽）
+#   - 重复秒杀返回 300501，参数非法/商品不存在返回 300100
+meta:
+  module: "秒杀业务"
+  default_method: POST
+
+variables:
+  goods_id: 1
+
+test_cases:
+  - id: API_MS_RESET_001
+    title: "秒杀-重置库存（测试辅助接口）"
+    level: p1
+    request:
+      method: GET
+      path: "/miaosha/reset"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+
+  - id: API_MS_001
+    title: "秒杀-正向秒杀（前置重置库存）"
+    level: p0
+    tags: [smoke]
+    setup:
+      - action: request
+        name: "前置-重置库存"
+        request: {method: GET, path: "/miaosha/reset"}
+    request:
+      path: "/miaosha/miaosha"
+      data: {goodsId: "${goods_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_MS_002
+    title: "秒杀-同一商品重复秒杀（应被拒绝）"
+    level: p1
+    setup:
+      - action: request
+        name: "前置-重置库存"
+        request: {method: GET, path: "/miaosha/reset"}
+      - action: request
+        name: "前置-第一次秒杀"
+        request: {method: POST, path: "/miaosha/miaosha", data: {goodsId: 1}}
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+    request:
+      path: "/miaosha/miaosha"
+      data: {goodsId: "${goods_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_MS_003
+    title: "秒杀-结果查询（秒杀后轮询下单结果）"
+    level: p1
+    setup:
+      - action: request
+        name: "前置-重置库存"
+        request: {method: GET, path: "/miaosha/reset"}
+      - action: request
+        name: "前置-发起秒杀"
+        request: {method: POST, path: "/miaosha/miaosha", data: {goodsId: 1}}
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+    request:
+      method: GET
+      path: "/miaosha/result"
+      params: {goodsId: "${goods_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: exists}
+
+  - id: API_MS_004
+    title: "秒杀-缺 goodsId"
+    level: p1
+    request:
+      path: "/miaosha/miaosha"
+      data: {}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_MS_005
+    title: "秒杀-goodsId=0"
+    level: p2
+    request:
+      path: "/miaosha/miaosha"
+      data: {goodsId: 0}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MS_006
+    title: "秒杀-goodsId 负数"
+    level: p2
+    request:
+      path: "/miaosha/miaosha"
+      data: {goodsId: -1}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MS_007
+    title: "秒杀-goodsId 小数"
+    level: p2
+    request:
+      path: "/miaosha/miaosha"
+      data: {goodsId: 1.5}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MS_008
+    title: "秒杀-goodsId 非数字"
+    level: p2
+    request:
+      path: "/miaosha/miaosha"
+      data: {goodsId: "abc"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MS_009
+    title: "秒杀-不存在的商品 goodsId"
+    level: p2
+    request:
+      path: "/miaosha/miaosha"
+      data: {goodsId: 999999}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+
+  - id: API_MS_010
+    title: "秒杀-超长 goodsId（断言从宽）"
+    level: p2
+    request:
+      path: "/miaosha/miaosha"
+      data: {goodsId: "99999999999999999999999999"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+
+  - id: API_MS_OVER_001
+    title: "秒杀-结束接口（服务端已知缺陷，断言从宽）"
+    level: p2
+    request:
+      method: GET
+      path: "/miaosha/over/miaosha"
+      params: {goodsId: "${goods_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+
+  - id: API_MS_TESTPATH_001
+    title: "秒杀-需验证码路径接口（无验证码应被拒绝，断言从宽）"
+    level: p2
+    request:
+      method: POST
+      path: "/miaosha/testpath/miaosha"
+      data: {goodsId: "${goods_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}

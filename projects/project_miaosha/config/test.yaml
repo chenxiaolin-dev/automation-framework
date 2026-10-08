@@ -1,0 +1,35 @@
+# project_miaosha（秒杀商城）- 测试环境配置
+# 本轮只做 API 接口自动化方向，故只保留 api 段（web_ui/app/mini_program 需要时再补）。
+#
+# 服务端约定（已实测确认）：
+#   - 请求格式：表单 application/x-www-form-urlencoded（YAML 用例统一用 request.data 传参）
+#   - 鉴权：登录换取 token，响应 {"code":0,"data":"<token>"}，token 放自定义请求头 token
+#   - 登录接口：POST /login/redis/login（mobile + password(md5) + verifyCode + verifyKey）
+#   - 密码：明文按服务端 salt 规则拼接后 MD5，111111 -> 5c4fcc5add5d087de1e8534189c687f7
+#   - 验证码：测试环境万能验证码 9999
+#
+# CI 中如需隐藏账号，可把下方字面量换成 ${ENV.MIAOSHA_MOBILE} / ${ENV.MIAOSHA_PASSWORD} 并注入环境变量。
+project:
+  name: project_miaosha
+
+api:
+  base_url: "http://121.43.36.83:2001"
+  timeout: 10
+  headers:
+    Accept: "application/json"
+  auth:
+    type: "login"
+    request:
+      method: POST
+      path: "/login/redis/login"
+      data:                      # 表单格式，与业务接口保持一致
+        mobile: "13588000000"
+        password: "5c4fcc5add5d087de1e8534189c687f7"   # 明文 111111 的加盐 MD5
+        verifyCode: "9999"       # 万能验证码（测试环境）
+        verifyKey: "autotest-verify-key"               # 验证码标识，测试环境不校验
+    token_path: "json.data"      # 登录响应取值路径
+    header_name: "token"         # 服务端用自定义头 token，不是 Authorization
+    token_prefix: ""
+
+safety:
+  allow_prod_execution: false

@@ -1,0 +1,164 @@
+"""YAML 用例执行引擎：setup 前置 → 主请求 → validate 断言 → schema 校验 → extract 提取 → teardown 后置。
+
+变量语法 ${...} 四种来源（按顺序解析）：
+  ${name}       文件级 variables / extract 提取 / 上下文共享变量（api_context）
+  ${ENV.KEY}    操作系统环境变量（未设置直接报错）
+  ${fake.xxx}   Faker(zh_CN) 同名方法动态造数，支持与固定文本拼接（如 "某路${fake.building_number}号"）
+  ${field}      data_matrix 展开字段
+"""
+from __future__ import annotations
+
+import os
+import re
+import time
+
+import allure
+import jsonschema
+from loguru import logger
+
+from core.data.factory import call_fake
+from engines.api.assertions import apply_check, apply_op, get_response_value
+
+VAR_PATTERN = re.compile(r"\$\{([^}]+)\}")
+
+
+class CaseError(RuntimeError):
+    """用例数据/变量解析错误（配置问题，与断言失败区分开）。"""
+
+
+# ---------------- 变量解析 ----------------
+
+def _resolve_token(token: str, scopes: list[dict]):
+    token = token.strip()
+    if token.startswith("ENV."):
+        key = token[4:]
+        if key not in os.environ:
+            raise CaseError(f"环境变量未设置: ${{{token}}}")
+        return os.environ[key]
+    if token.startswith("fake."):
+        return call_fake(token[5:])  # 未知的 Faker 方法在此抛 ValueError
+    for scope in scopes:
+        if isinstance(scope, dict) and token in scope:
+            return scope[token]
+    raise CaseError(f"变量未定义: ${{{token}}}（可用来源: variables/extract/上下文/data_matrix/ENV./fake.）")
+
+
+def _resolve_string(text: str, scopes: list[dict]):
+    m = VAR_PATTERN.fullmatch(text.strip())
+    if m:  # 整串就是一个变量 -> 保留原始类型
+        return _resolve_token(m.group(1), scopes)
+
+    def repl(m: "re.Match") -> str:
+        return str(_resolve_token(m.group(1), scopes))
+
+    return VAR_PATTERN.sub(repl, text)
+
+
+def resolve_value(value, scopes: list[dict]):
+    """深度解析 dict/list/str 中的 ${...} 变量。"""
+    if isinstance(value, str):
+        return _resolve_string(value, scopes)
+    if isinstance(value, dict):
+        return {k: resolve_value(v, scopes) for k, v in value.items()}
+    if isinstance(value, list):
+        return [resolve_value(v, scopes) for v in value]
+    return value
+
+
+# ---------------- 请求 / 校验 / 提取 ----------------
+
+def _send_request(client, req: dict, scopes: list[dict], name: str | None = None):
+    if not req.get("path"):
+        raise CaseError("request 缺少 path")
+    return client.request(
+        str(req.get("method") or "GET").upper(),
+        req["path"],
+        params=resolve_value(req.get("params"), scopes),
+        json=resolve_value(req.get("json"), scopes),
+        data=resolve_value(req.get("data"), scopes),
+        headers=resolve_value(req.get("headers"), scopes),
+        name=name,
+    )
+
+
+def _apply_validates(resp, checks: list[dict] | None, scopes: list[dict]) -> None:
+    for c in checks or []:
+        expect = resolve_value(c.get("expect"), scopes)
+        apply_check(resp, c["check"], c.get("assert", "eq"), expect)
+        logger.debug(f"[validate] {c['check']} {c.get('assert', 'eq')} {expect!r} 通过")
+
+
+def _apply_schema(resp, schema: dict) -> None:
+    jsonschema.validate(instance=resp.json(), schema=schema)
+
+
+def _apply_extract(resp, extract: dict | None, context: dict) -> None:
+    for var, path in (extract or {}).items():
+        context[var] = get_response_value(resp, path)
+        logger.debug(f"[extract] {var} <- {path} = {context[var]!r}")
+
+
+# ---------------- setup / teardown 动作 ----------------
+
+def run_action(client, action: dict, context: dict, scopes: list[dict]) -> None:
+    act = action.get("action")
+    if act == "log":
+        logger.info(f"[action:log] {resolve_value(action.get('message', ''), scopes)}")
+    elif act == "wait":
+        time.sleep(float(action.get("seconds", 1)))
+    elif act == "set":
+        context[action["name"]] = resolve_value(action.get("value"), scopes)
+    elif act == "assert":
+        path = action.get("check", "")
+        if not path.startswith("context."):
+            raise CaseError("assert 动作仅支持上下文变量: context.xxx")
+        apply_op(context.get(path[len("context."):]), action.get("assert", "eq"),
+                 resolve_value(action.get("expect"), scopes), label=path)
+    elif act == "request":
+        resp = _send_request(client, action.get("request") or {}, scopes,
+                             name=action.get("name", "前置/后置请求"))
+        _apply_validates(resp, action.get("validate"), scopes)
+        if action.get("schema"):
+            _apply_schema(resp, action["schema"])
+        _apply_extract(resp, action.get("extract"), context)
+    else:
+        raise CaseError(f"未知 setup/teardown 动作: {act}（支持 log/wait/set/assert/request）")
+
+
+# ---------------- 用例主流程 ----------------
+
+def run_case(client, case: dict, context: dict | None = None):
+    """执行一条 YAML 用例；context 为跨用例共享变量字典（api_context）。"""
+    context = context if context is not None else {}
+    scopes = [case.get("_matrix") or {}, case.get("_variables") or {}, context]
+    case_id = case.get("id", "-")
+    title = case.get("title", "")
+    meta = case.get("_meta") or {}
+    req = dict(case.get("request") or {})
+    req["method"] = str(req.get("method") or meta.get("default_method") or "GET").upper()
+
+    with allure.step(f"[{case.get('level', 'p?')}] {case_id} {title}"):
+        if case.get("setup"):
+            with allure.step("setup 前置"):
+                for action in case["setup"]:
+                    run_action(client, action, context, scopes)
+
+        with allure.step(f"主请求 {req['method']} {req.get('path', '')}"):
+            resp = _send_request(client, req, scopes, name=f"{case_id} {req['method']} {req.get('path', '')}")
+
+        with allure.step("validate 断言"):
+            _apply_validates(resp, case.get("validate"), scopes)
+
+        if case.get("schema"):
+            with allure.step("schema 结构校验"):
+                _apply_schema(resp, case["schema"])
+
+        if case.get("extract"):
+            with allure.step("extract 提取"):
+                _apply_extract(resp, case["extract"], context)
+
+        if case.get("teardown"):
+            with allure.step("teardown 后置（数据清理）"):
+                for action in case["teardown"]:
+                    run_action(client, action, context, scopes)
+    return resp

@@ -1,0 +1,44 @@
+# 被测项目A - 测试环境配置（配置与代码分离；CI 中可用环境变量 AUTOTEST_API_BASE_URL 覆盖）
+project: "被测项目A（示例）"
+
+api:
+  base_url: "https://api.test.example-a.com"
+  timeout: 10
+  public_headers:            # 所有请求自动携带的公共 Header
+    X-Channel: "autotest"
+    X-Env: "test"
+  login:
+    path: "/api/v1/login"
+    token_field: "data.token"
+    account_key: "default"   # 默认登录账号（accounts.yaml 中的 key）
+
+ui:
+  base_url: "https://www.test.example-a.com"
+  browser: "chromium"
+  headless: true
+  viewport:
+    width: 1366
+    height: 768
+  # storage_state: "auth/state.json"   # 复用 UI 登录态，避免每条用例重复登录
+
+  # db:                       # 可选：数据库校验（core/db.py，需 pip install pymysql）
+  #   host: "127.0.0.1"
+  #   port: 3306
+  #   user: "autotest"
+  #   password: "xxx"
+  #   database: "appa"
+
+app:
+  server_url: "http://127.0.0.1:4723"
+  capabilities:
+    platformName: "Android"
+    automationName: "UiAutomator2"
+    deviceName: "emulator-5554"
+    appPackage: "com.example.appa"
+    appActivity: ".MainActivity"
+    noReset: true
+
+miniprogram:
+  project_path: "./miniapp/dist"        # 小程序源码目录（含 project.config.json）
+  cli_path: "C:/Program Files (x86)/Tencent/微信web开发者工具/cli.bat"
+  port: 9420

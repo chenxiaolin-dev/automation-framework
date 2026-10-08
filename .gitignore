@@ -1,0 +1,30 @@
+# ── Python ──────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# ── 虚拟环境 ────────────────────────────────────────
+.venv/
+venv/
+
+# ── IDE / 编辑器 ────────────────────────────────────
+.idea/
+.vscode/
+
+# ── 运行产物（每次跑都会重新生成，不入库）────────────
+logs/
+outputs/
+reports/
+allure-results/
+allure-report/
+projects/*/test_report/
+*.log
+
+# ── 凭据 / 本机运行状态 ─────────────────────────────
+auth/state.json
+.env
+.env.*
+
+# ── 工具本地数据（与代码无关）───────────────────────
+.workbuddy/

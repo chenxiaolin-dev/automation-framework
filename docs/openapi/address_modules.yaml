@@ -1,0 +1,20 @@
+# api-test-gen 模块配置（收货地址）
+# key = Swagger tag 原文
+modules:
+  "收货地址":
+    slug: address_openapi         # -> data/api/address_openapi_cases.yaml
+                                  #    刻意不用 address，避免覆盖 9-28 已交付的手工用例 address_cases.yaml
+    cn_name: 收货地址              # -> meta.module（Allure Story 分组）
+    id_prefix: ADDRESS            # -> 用例 ID 前缀 API_ADDRESS_ADD_001
+    levels:
+      positive: p0
+      negative: p1
+      boundary: p2
+    smoke_positive: true          # 正向打 smoke 标
+    testdata:                     # 环境上真实可用的值；非必填字段也靠它进正向报文
+      province: "广东省"
+      city: "深圳市"
+      district: "南山区"
+      zipCode: "518000"
+      isDefault: 0
+      detailAddress: "详细地址${fake.building_number}号"

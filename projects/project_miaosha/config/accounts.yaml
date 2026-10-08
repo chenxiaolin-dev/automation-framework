@@ -1,0 +1,11 @@
+# project_miaosha 账号池
+# 说明：框架当前只加载 config/{env}.yaml，api.auth 的登录参数以 test.yaml 为准；
+#       本文件作为账号资产留存（多账号/多角色扩展、UI 方向复用），两边需保持一致。
+# CI 中建议把 password_md5 换成 ${ENV.MIAOSHA_PASSWORD} 注入，避免明文入库。
+default:
+  mobile: "13588000000"
+  password: "111111"                                  # 明文（仅供人工排查，接口传 MD5 值）
+  password_md5: "5c4fcc5add5d087de1e8534189c687f7"    # 111111 经服务端 salt 规则 MD5 后的值
+  verify_code: "9999"                                 # 测试环境万能验证码
+  role: "member"
+  nickname: "sq000"

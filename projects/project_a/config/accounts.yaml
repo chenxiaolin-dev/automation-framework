@@ -1,0 +1,9 @@
+# 账号配置（敏感信息建议 CI 中用环境变量注入，勿提交真实密码）
+default:
+  username: "test_user_01"
+  password: "123456"
+  role: "member"
+admin:
+  username: "test_admin_01"
+  password: "admin@123"
+  role: "admin"

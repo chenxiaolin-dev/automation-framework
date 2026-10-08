@@ -1,0 +1,11 @@
+# 秒杀管理模块的语义配置：中文名 / 优先级 / ID 前缀 / 环境真实数据
+modules:
+  "秒杀管理":
+    slug: miaosha_manage          # -> data/api/miaosha_manage_cases.yaml（避开已存在的 miaosha_cases.yaml）
+    cn_name: 秒杀管理              # 写入 meta.module（Allure Story 分组）
+    id_prefix: MIAOSHA_MGMT       # 用例 ID: API_MIAOSHA_MGMT_001
+    levels: {positive: p0, negative: p1, boundary: p2}
+    smoke_positive: true          # 正向用例打 smoke 标
+    testdata:                     # 环境上真实存在的值（路径/查询参数用）
+      goodsId: "1"
+      path: "testpath"            # 隐藏路径固定值

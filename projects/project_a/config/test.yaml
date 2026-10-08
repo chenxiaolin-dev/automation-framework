@@ -1,0 +1,20 @@
+# 项目A（演示骨架）- 测试环境配置
+project:
+  name: project_a
+
+api:
+  base_url: "https://httpbin.org"     # 公共演示服务，演示 GET/POST/数据矩阵/extract 链路
+  timeout: 15
+  headers:
+    Accept: "application/json"
+  # auth:                              # 可选，不配则裸发请求
+  #   type: "bearer"
+  #   token: "xxx"
+
+web_ui:
+  base_url: "https://httpbin.org"
+  browser: "chromium"
+  headless: true
+
+safety:
+  allow_prod_execution: false

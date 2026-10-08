@@ -1,0 +1,109 @@
+# 秒杀业务场景用例（表单格式）。
+#
+# ⚠ 职责边界（2026-10-01 整理）：
+#   参数矩阵类用例（正向秒杀 / 缺参 / 类型非法 / 空串 / 负数 / 不存在 goodsId / reset / path /
+#   verifyCode）已统一由 **miaosha_manage_cases.yaml** 覆盖，本文件不再重复，避免两处断言标准打架。
+#   本文件只保留 manage 未覆盖的「业务场景 + 特殊边界」：
+#     - 重复秒杀（300501）
+#     - 秒杀结果轮询
+#     - goodsId = 0 / 小数 / 超长数字串
+#   原文（含重复的 14 条）已备份到 data/_archive/miaosha_cases.20261001.bak.yaml（不在扫描根下）。
+#
+# 服务端约定（已实测 2026-10-01）：
+#   - GET  /miaosha/reset              重置秒杀库存与状态（测试辅助接口，正向用例前置调用）
+#   - POST /miaosha/miaosha            秒杀下单，表单参数 goodsId
+#   - GET  /miaosha/result?goodsId=1   秒杀结果轮询（0=排队中 / >0 订单号 / -1 失败）
+#   - 重复秒杀返回 300501；goodsId 非法（0 / 1.5 / 超长）返回 300100
+#   - POST /miaosha/over/miaosha       「会超卖」版本，由 manage_002 覆盖（GET 方法不被支持，返回 300100）
+#   - /miaosha/{path}/miaosha          隐藏路径必须是 GET /miaosha/path 动态返回的 32 位随机串，
+#                                      固定 testpath 实测返回 300102（旧用例 TESTPATH_001 属假通过，已删除）
+meta:
+  module: "秒杀业务"
+  default_method: POST
+
+variables:
+  goods_id: 1
+
+test_cases:
+  - id: API_MS_002
+    title: "秒杀-同一商品重复秒杀（第二次应被拒绝 300501）"
+    level: p1
+    setup:
+      - action: request
+        name: "前置-重置库存"
+        request: {method: GET, path: "/miaosha/reset"}
+      - action: request
+        name: "前置-第一次秒杀"
+        request: {method: POST, path: "/miaosha/miaosha", data: {goodsId: "${goods_id}"}}
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+    request:
+      path: "/miaosha/miaosha"
+      data: {goodsId: "${goods_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+    teardown:
+      - action: request
+        name: "清理-重置库存"
+        request: {method: GET, path: "/miaosha/reset"}
+
+  - id: API_MS_003
+    title: "秒杀-结果查询（秒杀后轮询下单结果）"
+    level: p1
+    setup:
+      - action: request
+        name: "前置-重置库存"
+        request: {method: GET, path: "/miaosha/reset"}
+      - action: request
+        name: "前置-发起秒杀"
+        request: {method: POST, path: "/miaosha/miaosha", data: {goodsId: "${goods_id}"}}
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+    request:
+      method: GET
+      path: "/miaosha/result"
+      params: {goodsId: "${goods_id}"}
+    # 实测：data 可能是 0（排队中）或 >0 的订单号，两者都算正常，故只断言字段存在
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: exists}
+    teardown:
+      - action: request
+        name: "清理-重置库存"
+        request: {method: GET, path: "/miaosha/reset"}
+
+  - id: API_MS_005
+    title: "秒杀-goodsId=0（实测 300100 服务端异常）"
+    level: p2
+    request:
+      path: "/miaosha/miaosha"
+      data: {goodsId: 0}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_MS_007
+    title: "秒杀-goodsId 小数 1.5（实测 300100 服务端异常）"
+    level: p2
+    request:
+      path: "/miaosha/miaosha"
+      data: {goodsId: 1.5}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_MS_010
+    title: "秒杀-超长 goodsId（26 位数字串，实测 300100 服务端异常）"
+    level: p2
+    request:
+      path: "/miaosha/miaosha"
+      data: {goodsId: "99999999999999999999999999"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}

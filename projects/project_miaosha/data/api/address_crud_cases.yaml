@@ -1,0 +1,185 @@
+# 收货地址 CRUD 业务依赖链：新增 -> 列表查询 -> 详情查询 -> 更新 -> 设置默认 -> 删除（清理）
+#
+# 生成方式：api-test-gen 先按 Swagger tag=收货地址 生成单接口用例作为素材
+#           （dry-run 基线 19 条：正向 6 / 负向 13 / 边界 0；增强版 51 条见 data/api/address_openapi_cases.yaml），
+#           再按业务链路手工串联成本文件。
+#
+# 串联机制：
+#   - depends_on 保证执行顺序（engines/api/case_loader.py 拓扑排序），被依赖用例先跑
+#   - 新增步骤 extract address_id；服务端 Result<long> 直接返回主键标量，取值路径是 json.data（不是 json.data.id）
+#   - 后续步骤统一用 ${address_id} 引用，禁止硬编码
+#
+# 标记说明：
+#   - crud    ：属于业务依赖链
+#   - serial  ：依赖链必须串行执行（框架当前未开 xdist 并发；该标记用于 CI 侧禁止对本链路并行化）
+#   - cleanup ：链路最后一步，负责删除造数，跑完不留脏数据
+#
+# 清理约定（重要）：
+#   - 整条链路由最后一步 API_CRUD_DELETE_001 负责删除造数，跑完不留脏数据；
+#   - 中间步骤（LIST/DETAIL/UPDATE/SETDEFAULT）**不要**在 teardown 里删除 address_id，
+#     否则整链跑（如 -k CRUD）时后续步骤会拿不到地址而失败；
+#   - 代价：单独跑中间步骤（-k API_CRUD_UPDATE_001）会残留一条地址。
+#     需要单步执行时请跑完整链（-k CRUD），或执行完手动调一次 /address/delete。
+#   - 更新步骤把 省份 / 城市 / 区县 / 详细地址 / 邮编 全部改成与新增时不同的值
+#   - 更新步骤 teardown 回查详情接口，断言新值已生效
+#
+# 请求约定：全部为表单 application/x-www-form-urlencoded（YAML 用 request.data）
+#
+# 运行：
+#   python -m pytest projects/project_miaosha --project project_miaosha --env test --type api -k CRUD
+#   python -m pytest projects/project_miaosha --project project_miaosha --env test --type api -m cleanup
+meta:
+  module: "收货地址-CRUD链路"
+  default_method: POST
+
+variables:
+  # ---- 新增时用的值 ----
+  province: "广东省"
+  city: "深圳市"
+  district: "南山区"
+  zipCode: "518000"
+  # ---- 更新时改成的值（必须与上面不同）----
+  new_province: "浙江省"
+  new_city: "杭州市"
+  new_district: "西湖区"
+  new_zipCode: "310000"
+
+test_cases:
+  # ============ 步骤 1：新增（链路起点，产出 address_id）============
+  - id: API_CRUD_ADD_001
+    title: "CRUD-01 新增收货地址（链路起点，extract address_id）"
+    level: p0
+    tags: [crud, serial]
+    request:
+      path: "/address/add"
+      data:
+        receiverName: "${fake.name}"
+        receiverPhone: "${fake.phone_number}"
+        province: "${province}"
+        city: "${city}"
+        district: "${district}"
+        detailAddress: "CRUD新增地址${fake.building_number}号"
+        zipCode: "${zipCode}"
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: not_empty}
+    extract:
+      address_id: "json.data"
+
+  # ============ 步骤 2：列表查询 ============
+  - id: API_CRUD_LIST_001
+    title: "CRUD-02 列表查询（新增后可见）"
+    level: p0
+    tags: [crud, serial]
+    depends_on: [API_CRUD_ADD_001]
+    request:
+      method: GET
+      path: "/address/list"
+      params: {page: 1, pageSize: 50}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: type, expect: list}
+      - {check: json.data, assert: not_empty}
+    teardown:
+      # 框架断言不支持「列表包含某个 id」，用回查详情兜底证明「新增的那条确实存在且可见」
+      - action: request
+        name: "复核-回查详情确认新增地址可见"
+        request:
+          method: GET
+          path: "/address/detail/${address_id}"
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+          - {check: json.data.id, assert: eq, expect: "${address_id}"}
+          - {check: json.data.province, assert: eq, expect: "${province}"}
+
+  # ============ 步骤 3：详情查询（路径参数用 ${address_id}）============
+  - id: API_CRUD_DETAIL_001
+    title: "CRUD-03 详情查询（按 ${address_id} 查刚新增的地址）"
+    level: p0
+    tags: [crud, serial]
+    depends_on: [API_CRUD_ADD_001]
+    request:
+      method: GET
+      path: "/address/detail/${address_id}"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: not_empty}
+
+  # ============ 步骤 4：更新（改成与新增时不同的值）============
+  - id: API_CRUD_UPDATE_001
+    title: "CRUD-04 更新地址（省份/城市/区县/详细地址全量改成不同值）"
+    level: p0
+    tags: [crud, serial]
+    depends_on: [API_CRUD_ADD_001]
+    request:
+      path: "/address/update"
+      data:
+        id: "${address_id}"
+        receiverName: "${fake.name}"
+        receiverPhone: "${fake.phone_number}"
+        province: "${new_province}"
+        city: "${new_city}"
+        district: "${new_district}"
+        detailAddress: "CRUD更新后地址${fake.building_number}号"
+        zipCode: "${new_zipCode}"
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+    teardown:
+      - action: request
+        name: "复核-回查详情确认更新已生效"
+        request:
+          method: GET
+          path: "/address/detail/${address_id}"
+        validate:
+          - {check: json.data.province, assert: eq, expect: "${new_province}"}
+          - {check: json.data.city, assert: eq, expect: "${new_city}"}
+          - {check: json.data.district, assert: eq, expect: "${new_district}"}
+          - {check: json.data.detailAddress, assert: contains, expect: "CRUD更新后地址"}
+
+  # ============ 步骤 5：设置默认 ============
+  - id: API_CRUD_SETDEFAULT_001
+    title: "CRUD-05 设置为默认地址"
+    level: p0
+    tags: [crud, serial]
+    depends_on: [API_CRUD_ADD_001]
+    request:
+      path: "/address/setDefault"
+      data:
+        id: "${address_id}"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+    teardown:
+      # 有效性保证：不只看「接口返回 0」，回查详情确认 isDefault 真的变成 1
+      - action: request
+        name: "复核-回查详情确认已设为默认"
+        request:
+          method: GET
+          path: "/address/detail/${address_id}"
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+          - {check: json.data.isDefault, assert: eq, expect: 1}
+
+  # ============ 步骤 6：删除（链路清理）============
+  - id: API_CRUD_DELETE_001
+    title: "CRUD-06 删除地址（链路清理，跑完不留脏数据）"
+    level: p0
+    tags: [crud, serial, cleanup]
+    depends_on: [API_CRUD_UPDATE_001, API_CRUD_SETDEFAULT_001]
+    request:
+      path: "/address/delete"
+      data:
+        id: "${address_id}"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+    teardown:
+      - action: assert
+        check: context.address_id
+        assert: not_empty

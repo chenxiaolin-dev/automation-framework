@@ -1,0 +1,639 @@
+# 收货地址模块单接口用例（表单格式 application/x-www-form-urlencoded）。
+# 服务端字段约定（已实测）：
+#   - 新增 /address/add：receiverName/receiverPhone/province/city/district/detailAddress/zipCode/isDefault(0-否 1-是)
+#   - 修改 /address/update 与删除 /address/delete 的主键字段是 id（不是 addressId）
+#   - 该服务端新增接口参数校验缺失，缺参也会返回 code=0，故异常用例断言从宽（status=200 且 code 存在）
+#   - 所有新增产生的脏数据均在 teardown 中删除
+#
+# 实测基线（2026-10-01，带 token）：
+#   - /address/update   缺 id -> 300101；不存在 id -> 300601
+#   - /address/delete   缺 id -> 300100；不存在 id -> 300601
+#   - /address/detail   不存在 id -> 300601；id=abc -> 300100；路径缺 id -> HTTP 404（非业务 JSON，无 code）
+#   - /address/setDefault 缺 id -> 300100；不存在 id -> 300601；id=abc -> 300100
+#   - ⚠ 新增时即便传 isDefault=0，回查详情也是 isDefault=1（服务端会兜底置默认），
+#     故「设默认」类断言属弱断言，已在 API_ADDR_ADD_002 / API_ADDR_SETDEFAULT_001 注释中标明。
+meta:
+  module: "收货地址"
+  default_method: POST
+
+variables:
+  province: "广东省"
+  city: "深圳市"
+  district: "南山区"
+  zip_code: "518000"
+
+test_cases:
+  # ================= 新增 /address/add =================
+  - id: API_ADDR_ADD_001
+    title: "新增地址-正向（Faker 随机全字段）"
+    level: p0
+    tags: [smoke]
+    request:
+      path: "/address/add"
+      data:
+        receiverName: "${fake.name}"
+        receiverPhone: "${fake.phone_number}"
+        province: "${province}"
+        city: "${city}"
+        district: "${district}"
+        detailAddress: "科技园${fake.building_number}号"
+        zipCode: "${zip_code}"
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: not_empty}
+    extract:
+      address_id: "json.data"
+    teardown:
+      - action: request
+        name: "清理-删除新增地址"
+        request:
+          method: POST
+          path: "/address/delete"
+          data: {id: "${address_id}"}
+
+  - id: API_ADDR_ADD_002
+    title: "新增地址-设为默认地址（isDefault=1）"
+    level: p1
+    request:
+      path: "/address/add"
+      data:
+        receiverName: "${fake.name}"
+        receiverPhone: "${fake.phone_number}"
+        province: "${province}"
+        city: "${city}"
+        district: "${district}"
+        detailAddress: "默认地址${fake.building_number}号"
+        zipCode: "${zip_code}"
+        isDefault: 1
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+    extract:
+      address_id: "json.data"
+    teardown:
+      - action: request
+        name: "复核-回查详情确认 isDefault 已生效"
+        request:
+          method: GET
+          path: "/address/detail/${address_id}"
+        validate:
+          # ⚠ 弱断言：实测（2026-10-01）服务端对新增地址会置 isDefault=1，即便入参传 0。
+          # 也就是说本条与 ADD_001 的回查结果可能相同，无法真正区分「传 1 生效」。
+          # 若要强校验，需先造一条已存在的默认地址再新增第二条设为默认，验证前者被置 0。
+          - {check: json.code, assert: eq, expect: 0}
+          - {check: json.data.isDefault, assert: eq, expect: 1}
+      - action: request
+        name: "清理-删除新增地址"
+        request:
+          method: POST
+          path: "/address/delete"
+          data: {id: "${address_id}"}
+
+  - id: API_ADDR_ADD_003
+    title: "新增地址-缺 receiverName（服务端无校验，断言从宽）"
+    level: p1
+    request:
+      path: "/address/add"
+      data:
+        receiverPhone: "${fake.phone_number}"
+        province: "${province}"
+        city: "${city}"
+        district: "${district}"
+        detailAddress: "某路1号"
+        zipCode: "${zip_code}"
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+      - {check: json.msg, assert: not_empty}
+    extract:
+      address_id: "json.data"
+    teardown:
+      - action: request
+        name: "清理-删除新增地址"
+        request:
+          method: POST
+          path: "/address/delete"
+          data: {id: "${address_id}"}
+
+  - id: API_ADDR_ADD_004
+    title: "新增地址-缺 receiverPhone"
+    level: p1
+    request:
+      path: "/address/add"
+      data:
+        receiverName: "${fake.name}"
+        province: "${province}"
+        city: "${city}"
+        district: "${district}"
+        detailAddress: "某路2号"
+        zipCode: "${zip_code}"      # 单变量原则：本条只缺 receiverPhone，其余字段补齐
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+    extract:
+      address_id: "json.data"
+    teardown:
+      - action: request
+        name: "清理-删除新增地址"
+        request:
+          method: POST
+          path: "/address/delete"
+          data: {id: "${address_id}"}
+
+  - id: API_ADDR_ADD_005
+    title: "新增地址-手机号格式非法"
+    level: p2
+    request:
+      path: "/address/add"
+      data:
+        receiverName: "${fake.name}"
+        receiverPhone: "123"
+        province: "${province}"
+        city: "${city}"
+        district: "${district}"
+        detailAddress: "某路3号"
+        zipCode: "${zip_code}"      # 单变量原则：本条只把手机号改成非法值
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+    extract:
+      address_id: "json.data"
+    teardown:
+      - action: request
+        name: "清理-删除新增地址"
+        request:
+          method: POST
+          path: "/address/delete"
+          data: {id: "${address_id}"}
+
+  - id: API_ADDR_ADD_006
+    title: "新增地址-收货人姓名超长（100 字符）"
+    level: p2
+    request:
+      path: "/address/add"
+      data:
+        receiverName: "超长收货人姓名测试超长收货人姓名测试超长收货人姓名测试超长收货人姓名测试超长收货人姓名测试超长收货人姓名测试超长收货人姓名测试超"
+        receiverPhone: "${fake.phone_number}"
+        province: "${province}"
+        city: "${city}"
+        district: "${district}"
+        detailAddress: "某路4号"
+        zipCode: "${zip_code}"      # 单变量原则：本条只把收货人姓名改成超长
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+    extract:
+      address_id: "json.data"
+    teardown:
+      - action: request
+        name: "清理-删除新增地址"
+        request:
+          method: POST
+          path: "/address/delete"
+          data: {id: "${address_id}"}
+
+  - id: API_ADDR_ADD_007
+    title: "新增地址-缺省省市区三级地址"
+    level: p2
+    request:
+      path: "/address/add"
+      data:
+        receiverName: "${fake.name}"
+        receiverPhone: "${fake.phone_number}"
+        detailAddress: "某路5号"
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+    extract:
+      address_id: "json.data"
+    teardown:
+      - action: request
+        name: "清理-删除新增地址"
+        request:
+          method: POST
+          path: "/address/delete"
+          data: {id: "${address_id}"}
+
+  - id: API_ADDR_ADD_008
+    title: "新增地址-空表单"
+    level: p2
+    request:
+      path: "/address/add"
+      data: {}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+    # 实测：服务端对空表单不做校验，会真实新增一条（姓名/地址均为 null），必须清理
+    extract:
+      address_id: "json.data"
+    teardown:
+      - action: request
+        name: "清理-删除空表单新增的脏数据"
+        request:
+          method: POST
+          path: "/address/delete"
+          data:
+            id: "${address_id}"
+
+  # ================= 列表 /address/list =================
+  - id: API_ADDR_LIST_001
+    title: "地址列表-正向查询"
+    level: p0
+    tags: [smoke]
+    request:
+      method: GET
+      path: "/address/list"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: type, expect: list}
+
+  - id: API_ADDR_LIST_002
+    title: "地址列表-带分页参数（page/pageSize）"
+    level: p1
+    request:
+      method: GET
+      path: "/address/list"
+      params: {page: 1, pageSize: 5}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data, assert: type, expect: list}
+
+  - id: API_ADDR_LIST_003
+    title: "地址列表-越界页码（断言从宽）"
+    level: p2
+    request:
+      method: GET
+      path: "/address/list"
+      params: {page: 9999, pageSize: 10}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+
+  - id: API_ADDR_LIST_004
+    title: "地址列表-pageSize=0（断言从宽）"
+    level: p2
+    request:
+      method: GET
+      path: "/address/list"
+      params: {page: 1, pageSize: 0}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+
+  - id: API_ADDR_LIST_005
+    title: "地址列表-分页参数非数字（断言从宽）"
+    level: p2
+    request:
+      method: GET
+      path: "/address/list"
+      params: {page: "abc", pageSize: "xyz"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+
+  # ================= 修改 /address/update（主键字段 id） =================
+  - id: API_ADDR_UPDATE_001
+    title: "修改地址-正向（前置新增，按 id 修改）"
+    level: p0
+    tags: [smoke]
+    setup:
+      - action: request
+        name: "前置-新增地址"
+        request:
+          method: POST
+          path: "/address/add"
+          data:
+            receiverName: "${fake.name}"
+            receiverPhone: "${fake.phone_number}"
+            province: "${province}"
+            city: "${city}"
+            district: "${district}"
+            detailAddress: "待修改地址${fake.building_number}号"
+            zipCode: "${zip_code}"
+            isDefault: 0
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+        extract:
+          address_id: "json.data"
+    request:
+      path: "/address/update"
+      data:
+        id: "${address_id}"
+        receiverName: "修改后的收件人"
+        receiverPhone: "${fake.phone_number}"
+        province: "${province}"
+        city: "广州市"
+        district: "天河区"
+        detailAddress: "修改后地址${fake.building_number}号"
+        zipCode: "510000"
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+    teardown:
+      - action: request
+        name: "清理-删除地址"
+        request:
+          method: POST
+          path: "/address/delete"
+          data: {id: "${address_id}"}
+
+  - id: API_ADDR_UPDATE_002
+    title: "修改地址-缺 id（地址ID不能为空）"
+    level: p1
+    request:
+      path: "/address/update"
+      data:
+        receiverName: "无ID修改"
+        receiverPhone: "${fake.phone_number}"
+        province: "${province}"
+        city: "${city}"
+        district: "${district}"
+        detailAddress: "某路6号"
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_ADDR_UPDATE_003
+    title: "修改地址-不存在的 id"
+    level: p1
+    request:
+      path: "/address/update"
+      data:
+        id: 99999999
+        receiverName: "不存在的地址"
+        receiverPhone: "${fake.phone_number}"
+        province: "${province}"
+        city: "${city}"
+        district: "${district}"
+        detailAddress: "某路7号"
+        isDefault: 0
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_ADDR_UPDATE_004
+    title: "修改地址-id 非数字（断言从宽）"
+    level: p2
+    request:
+      path: "/address/update"
+      data:
+        id: "abc"
+        receiverName: "非法ID修改"
+        detailAddress: "某路8号"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: exists}
+
+  # ================= 删除 /address/delete（主键字段 id） =================
+  - id: API_ADDR_DELETE_001
+    title: "删除地址-正向（前置新增，按 id 删除）"
+    level: p0
+    setup:
+      - action: request
+        name: "前置-新增待删除地址"
+        request:
+          method: POST
+          path: "/address/add"
+          data:
+            receiverName: "${fake.name}"
+            receiverPhone: "${fake.phone_number}"
+            province: "${province}"
+            city: "${city}"
+            district: "${district}"
+            detailAddress: "待删除地址${fake.building_number}号"
+            zipCode: "${zip_code}"
+            isDefault: 0
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+        extract:
+          address_id: "json.data"
+    request:
+      path: "/address/delete"
+      data: {id: "${address_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+
+  - id: API_ADDR_DELETE_002
+    title: "删除地址-缺 id"
+    level: p1
+    request:
+      path: "/address/delete"
+      data: {}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_ADDR_DELETE_003
+    title: "删除地址-不存在的 id"
+    level: p1
+    request:
+      path: "/address/delete"
+      data: {id: 99999999}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_ADDR_DELETE_004
+    title: "删除地址-重复删除同一 id（第二次应失败）"
+    level: p2
+    setup:
+      - action: request
+        name: "前置-新增地址"
+        request:
+          method: POST
+          path: "/address/add"
+          data:
+            receiverName: "${fake.name}"
+            receiverPhone: "${fake.phone_number}"
+            province: "${province}"
+            city: "${city}"
+            district: "${district}"
+            detailAddress: "重复删除验证${fake.building_number}号"
+            isDefault: 0
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+        extract:
+          address_id: "json.data"
+      - action: request
+        name: "前置-第一次删除"
+        request:
+          method: POST
+          path: "/address/delete"
+          data: {id: "${address_id}"}
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+    request:
+      path: "/address/delete"
+      data: {id: "${address_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  # ================= 详情 /address/detail/{id} =================
+  - id: API_ADDR_DETAIL_001
+    title: "地址详情-正向（前置新增，按 id 回查）"
+    level: p0
+    tags: [smoke]
+    setup:
+      - action: request
+        name: "前置-新增地址"
+        request:
+          method: POST
+          path: "/address/add"
+          data:
+            receiverName: "${fake.name}"
+            receiverPhone: "${fake.phone_number}"
+            province: "${province}"
+            city: "${city}"
+            district: "${district}"
+            detailAddress: "详情验证${fake.building_number}号"
+            zipCode: "${zip_code}"
+            isDefault: 0
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+        extract:
+          address_id: "json.data"
+    request:
+      method: GET
+      path: "/address/detail/${address_id}"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+      - {check: json.data.id, assert: eq, expect: "${address_id}"}
+      - {check: json.data.province, assert: eq, expect: "${province}"}
+      - {check: json.data.city, assert: eq, expect: "${city}"}
+      - {check: json.data.receiverName, assert: not_empty}
+    teardown:
+      - action: request
+        name: "清理-删除地址"
+        request:
+          method: POST
+          path: "/address/delete"
+          data: {id: "${address_id}"}
+
+  - id: API_ADDR_DETAIL_002
+    title: "地址详情-不存在的 id（实测 300601 收货地址不存在）"
+    level: p1
+    request:
+      method: GET
+      path: "/address/detail/99999999"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_ADDR_DETAIL_003
+    title: "地址详情-id 非数字（实测 300100 服务端异常）"
+    level: p2
+    request:
+      method: GET
+      path: "/address/detail/abc"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_ADDR_DETAIL_004
+    title: "地址详情-路径缺 id（实测 HTTP 404，Spring 默认错误体，无 code 字段）"
+    level: p2
+    request:
+      method: GET
+      path: "/address/detail/"
+    validate:
+      - {check: status_code, assert: lt, expect: 500}
+
+  # ================= 设置默认 /address/setDefault（主键字段 id） =================
+  - id: API_ADDR_SETDEFAULT_001
+    title: "设置默认地址-正向（前置新增，回查 isDefault 已生效）"
+    level: p0
+    tags: [smoke]
+    setup:
+      - action: request
+        name: "前置-新增地址"
+        request:
+          method: POST
+          path: "/address/add"
+          data:
+            receiverName: "${fake.name}"
+            receiverPhone: "${fake.phone_number}"
+            province: "${province}"
+            city: "${city}"
+            district: "${district}"
+            detailAddress: "设默认验证${fake.building_number}号"
+            zipCode: "${zip_code}"
+            isDefault: 0
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+        extract:
+          address_id: "json.data"
+    request:
+      path: "/address/setDefault"
+      data: {id: "${address_id}"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}
+    teardown:
+      - action: request
+        name: "复核-回查详情确认 isDefault=1"
+        request:
+          method: GET
+          path: "/address/detail/${address_id}"
+        validate:
+          - {check: json.code, assert: eq, expect: 0}
+          - {check: json.data.isDefault, assert: eq, expect: 1}
+      - action: request
+        name: "清理-删除地址"
+        request:
+          method: POST
+          path: "/address/delete"
+          data: {id: "${address_id}"}
+
+  - id: API_ADDR_SETDEFAULT_002
+    title: "设置默认地址-缺 id（实测 300100 服务端异常）"
+    level: p1
+    request:
+      path: "/address/setDefault"
+      data: {}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_ADDR_SETDEFAULT_003
+    title: "设置默认地址-不存在的 id（实测 300601 收货地址不存在）"
+    level: p1
+    request:
+      path: "/address/setDefault"
+      data: {id: 99999999}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}
+
+  - id: API_ADDR_SETDEFAULT_004
+    title: "设置默认地址-id 非数字（实测 300100 服务端异常）"
+    level: p2
+    request:
+      path: "/address/setDefault"
+      data: {id: "abc"}
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: ne, expect: 0}
+      - {check: json.msg, assert: not_empty}

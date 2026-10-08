@@ -1,0 +1,58 @@
+# 新项目配置正确性自检（单条冒烟用例，不产生脏数据）。
+# 一条用例串起 5 个配置校验点，任一处配错都会在本例中失败：
+#   1. base_url        -> api.base_url = http://121.43.36.83:2001 可达
+#   2. 请求格式        -> request.data 以表单 application/x-www-form-urlencoded 提交
+#   3. 密码规则        -> 明文 111111 按服务端 salt 规则 MD5（值取自 config/{env}.yaml api.auth）
+#   4. 万能验证码      -> 测试环境 verifyCode（值取自 config/{env}.yaml api.auth）
+#   5. token 鉴权链路  -> 登录取 json.data，自动注入自定义请求头 token 后访问受保护接口
+#
+# 说明：session 级 api_client 启动时已用 config/test.yaml 的 api.auth 登录并注入 token；
+#       本例 setup 显式再登录一次是为了把「登录配置本身」也纳入断言。
+#
+# 账号/验证码不再写死在用例里：${ENV.TEST_MOBILE} 等由 conftest._export_auth_env 从
+# config/{env}.yaml 的 api.auth 自动导出，CI 可用同名环境变量覆盖。
+meta:
+  module: "配置自检"
+  default_method: GET
+
+variables:
+  mobile: "${ENV.TEST_MOBILE}"
+  password_md5: "${ENV.TEST_PASSWORD}"                # 明文 111111 的加盐 MD5（不是 md5(111111)）
+  verify_code: "${ENV.TEST_VERIFYCODE}"               # 测试环境万能验证码
+  verify_key: "${ENV.TEST_VERIFYKEY}"                 # 验证码标识，测试环境不校验
+
+test_cases:
+  - id: API_CONFIG_CHECK_001
+    title: "配置自检-登录取 token 并访问受保护接口"
+    level: p0
+    tags: [smoke]
+    setup:
+      - action: request
+        name: "登录换取 token（表单 + MD5 密码 + 万能验证码）"
+        request:
+          method: POST
+          path: "/login/redis/login"
+          data:
+            mobile: "${mobile}"
+            password: "${password_md5}"
+            verifyCode: "${verify_code}"
+            verifyKey: "${verify_key}"
+        validate:
+          - {check: status_code, assert: eq, expect: 200}
+          - {check: json.code, assert: eq, expect: 0}
+          - {check: json.data, assert: not_empty}
+        extract:
+          login_token: "json.data"
+    request:
+      method: GET
+      path: "/address/list"
+    validate:
+      - {check: status_code, assert: eq, expect: 200}
+      - {check: json.code, assert: eq, expect: 0}      # 非 0 即 token 请求头未生效/鉴权配置有误
+      - {check: json.data, assert: type, expect: list}
+    teardown:
+      - action: assert
+        check: context.login_token
+        assert: not_empty
+      - action: log
+        message: "配置自检通过：base_url / 表单格式 / MD5 密码 / 万能验证码 / token 鉴权链路均正常"
