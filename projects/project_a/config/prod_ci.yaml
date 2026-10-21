@@ -1,0 +1,19 @@
+# 被测项目A - 正式环境（CI 巡检授权配置）
+#
+# 与 config/prod.yaml 的区别：
+#   prod.yaml    safety.allow_prod_execution: false —— 默认拒绝，即使加 --allow-prod 也跑不了
+#   prod_ci.yaml safety.allow_prod_execution: true  —— CI 巡检专用，配合命令行 --allow-prod 双开关生效
+#
+# 生产环境保护是「双开关」：命令行 --allow-prod AND 配置 allow_prod_execution: true，缺一即拒绝。
+# 把这个文件当成「显式授权记录」来管理：谁授权、授权跑什么（配合 -m smoke 只跑冒烟），要可追溯。
+project:
+  name: project_a
+
+api:
+  base_url: "https://httpbin.org"
+  timeout: 15
+  headers:
+    Accept: "application/json"
+
+safety:
+  allow_prod_execution: true   # 仅配合 -m smoke 冒烟巡检使用，禁止跑全量

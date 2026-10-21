@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── 框架自身离线自测：MockTransport，不依赖外网，必过 ──
+  self-test:
+    name: 框架自测 (offline)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+      - name: 运行框架自测
+        run: python -m pytest tests -q
+
+  # ── 演示项目回归：project_a 指向公共 httpbin.org，验证 YAML 用例引擎全链路 ──
+  demo-api:
+    name: 演示项目回归 (project_a)
+    runs-on: ubuntu-latest
+    needs: self-test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+      - name: 运行 project_a 接口用例
+        run: |
+          python -m pytest projects/project_a \
+            --project project_a --env test --type api -v \
+            --alluredir=allure-results/project_a --clean-alluredir
+      - name: 上传 Allure 结果
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-project_a
+          path: allure-results/project_a
+          retention-days: 14
+
+  # ── 生产环境双开关验证：缺 --allow-prod 或缺配置开关时必须被拒绝 ──
+  prod-guard:
+    name: 生产环境保护校验
+    runs-on: ubuntu-latest
+    needs: self-test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+      - name: 缺少 --allow-prod 时应被拒绝
+        run: |
+          set +e
+          python -m pytest projects/project_a --project project_a --env prod_ci --type api --collect-only
+          if [ $? -eq 0 ]; then
+            echo "::error::生产环境在缺少 --allow-prod 时竟然执行成功，保护机制失效"
+            exit 1
+          fi
+          echo "OK: 缺少 --allow-prod 已被正确拦截"
+      - name: 缺少配置开关时也应被拒绝
+        run: |
+          set +e
+          python -m pytest projects/project_a --project project_a --env prod --type api --collect-only
+          if [ $? -eq 0 ]; then
+            echo "::error::生产环境在缺少 safety.allow_prod_execution 时竟然执行成功，保护机制失效"
+            exit 1
+          fi
+          echo "OK: 缺少 safety.allow_prod_execution 已被正确拦截"

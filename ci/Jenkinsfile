@@ -1,11 +1,15 @@
 // Jenkins 声明式流水线示例（需安装 Allure Jenkins 插件并配置 allure 命令行工具）
+//
+// 生产环境双开关：命令行 --allow-prod AND 配置 safety.allow_prod_execution: true，
+// 缺一即在 collection 阶段拒绝执行。ENV=prod 时用 config/prod_ci.yaml（已授权），
+// config/prod.yaml 默认 allow_prod_execution: false，是拒绝执行的安全默认值。
 pipeline {
     agent any
 
     parameters {
-        choice(name: 'ENV', choices: ['test', 'prod'], description: '运行环境')
+        choice(name: 'ENV', choices: ['test', 'prod_ci'], description: '运行环境（prod_ci 需 --allow-prod）')
         string(name: 'PROJECT', defaultValue: 'project_a', description: '被测项目目录名')
-        string(name: 'MARK', defaultValue: 'api and not demo', description: 'pytest 标记表达式')
+        string(name: 'MARK', defaultValue: 'api', description: 'pytest 标记表达式')
     }
 
     stages {
@@ -16,8 +20,13 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh "python -m pytest projects/${params.PROJECT} --env ${params.ENV} " +
-                   "-m \"${params.MARK}\" --reruns 2 --alluredir=allure-results/${params.PROJECT}"
+                script {
+                    def isProd = params.ENV.toString().contains('prod')
+                    def prodFlag = isProd ? '--allow-prod' : ''
+                    sh "python -m pytest projects/${params.PROJECT} --project ${params.PROJECT} " +
+                       "--env ${params.ENV} --type api -m \"${params.MARK}\" ${prodFlag} " +
+                       "--reruns 2 --alluredir=allure-results/${params.PROJECT}"
+                }
             }
         }
     }

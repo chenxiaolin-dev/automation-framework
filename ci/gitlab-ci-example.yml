@@ -1,4 +1,15 @@
 # GitLab CI 示例：按方向与环境调度（按需裁剪，放入仓库根目录 .gitlab-ci.yml）
+#
+# 前置约定（框架侧已内置，示例里直接用）：
+#   - 配置文件名 = 环境名：--env test  →  projects/<项目>/config/test.yaml
+#   - 生产环境双开关：命令行 --allow-prod  AND  配置 safety.allow_prod_execution: true，
+#     缺一即在 collection 阶段报 UsageError 拒绝执行（见 conftest.py）
+#   - marker 方向：api / web_ui / app / mini_program（pytest.ini 已注册）
+#
+# 敏感信息：把凭据写成 ${ENV.KEY} 占位符，在 CI 的 Variables 里注入，避免明文入库。
+#   框架会自动把 api.auth.request.data 的每个字段导出为 TEST_<字段名大写> 环境变量
+#   （mobile → TEST_MOBILE），CI 预设的同名变量优先。
+
 stages: [test]
 
 .api_base: &api_base
@@ -13,21 +24,26 @@ stages: [test]
       - logs/
     expire_in: 7 days
 
-api-test:            # 每次提交：测试环境接口回归（排除离线 demo 用例）
+api-test:            # 每次提交：测试环境接口回归
   <<: *api_base
   script:
-    - python -m pytest projects/project_a --env test -m "api and not demo" --reruns 2 --alluredir=allure-results/project_a
+    - python -m pytest projects/project_a --project project_a --env test
+      --type api -m "api" --reruns 2 --alluredir=allure-results/project_a
 
 smoke-prod:          # 定时任务：正式环境线上巡检（Schedule 触发）
   <<: *api_base
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
   script:
-    - python -m pytest projects/project_a --env prod -m smoke --alluredir=allure-results/project_a
+    # prod_ci 配置里 safety.allow_prod_execution 为 true，与 --allow-prod 构成双开关
+    - python -m pytest projects/project_a --project project_a --env prod_ci
+      --type api -m smoke --allow-prod --alluredir=allure-results/project_a
 
 ui-test:             # Web UI：官方 playwright 镜像，初期允许失败不阻塞
   <<: *api_base
   image: mcr.microsoft.com/playwright/python:v1.45.0
   allow_failure: true
   script:
-    - python -m pytest projects/project_a --env test -m ui --alluredir=allure-results/project_a
+    # 注意 marker 名是 web_ui（不是 ui），否则一条用例都选不出来
+    - python -m pytest projects/project_a --project project_a --env test
+      --type web_ui -m web_ui --alluredir=allure-results/project_a
