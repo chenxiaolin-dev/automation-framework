@@ -21,26 +21,68 @@ project:
   name: "{name}"
 
 api:
-  base_url: "https://<被测服务地址>"   # TODO: 替换为真实测试环境地址
+  base_url: "https://httpbin.org"     # TODO: 替换为真实测试环境地址
   timeout: 10
   headers:
     Accept: "application/json"
   # auth:                              # 可选，不配则裸发请求
   #   type: "login"
-  #   request: {{method: POST, path: "/login", params: {{mobile: "...", password: "..."}}}}
+  #   request: {{method: POST, path: "/login", data: {{mobile: "...", password: "..."}}}}
   #   token_path: "json.data"
   #   header_name: "token"
   #   token_prefix: ""
 
 web_ui:
-  base_url: "https://<被测服务地址>"
+  base_url: "https://httpbin.org"
   browser: "chromium"
   headless: true
 
 safety:
   allow_prod_execution: false
 ''',
-    "data/api/.gitkeep": "",
+    "config/prod.yaml": '''\
+# 被测项目 {name} - 正式环境配置
+# 生产环境双开关：命令行 --allow-prod AND 本文件 allow_prod_execution: true，缺一即拒绝执行。
+# 默认 false = 拒绝，符合「正式环境需显式授权」的安全默认值。
+project:
+  name: "{name}"
+
+api:
+  base_url: "https://httpbin.org"     # TODO: 替换为真实正式环境地址
+  timeout: 10
+  headers:
+    Accept: "application/json"
+
+safety:
+  allow_prod_execution: false
+''',
+    "data/api/smoke_cases.yaml": '''\
+# 冒烟用例：验证接入是否成功（GET 回显 + 变量替换 + 断言链路）
+# 接入真实环境后，把 base_url 换成真实地址即可复用；新增用例放同目录 *_cases.yaml
+meta:
+  module: "冒烟"
+  default_method: GET
+
+variables:
+  framework: "automation-framework"
+
+test_cases:
+  - id: {name_upper}_SMOKE_001
+    title: "冒烟 - 基础 GET 请求与响应回显"
+    level: p0
+    tags: [smoke]
+    request:
+      path: "/get"
+      params:
+        from: "${{framework}}"
+    validate:
+      - check: status_code
+        assert: eq
+        expect: 200
+      - check: json.args.from
+        assert: eq
+        expect: "${{framework}}"
+''',
     "api/cases/test_yaml_cases.py": '''\
 from pathlib import Path
 
@@ -81,10 +123,11 @@ def main():
         sys.exit(f"项目已存在: {target}")
 
     created = []
+    fmt = {"name": name, "name_upper": name.upper()}
     for rel, content in TEMPLATES.items():
         path = target / rel
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(content.format(name=name), encoding="utf-8")
+        path.write_text(content.format(**fmt), encoding="utf-8")
         created.append(path)
     # 三层包结构（防止多项目同名测试文件 import file mismatch）
     for d in ["", "api", "api/cases"]:

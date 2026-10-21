@@ -14,7 +14,7 @@ import allure  # noqa: F401  确保依赖存在
 import pytest
 from loguru import logger
 
-from core.config.loader import RuntimeContext, build_runtime_context
+from core.config.loader import RuntimeContext, build_runtime_context, is_prod_env
 from core.logging.logger import add_case_sink, remove_case_sink, setup_run_logging
 from core.reporting.allure_attach import attach_failure_evidence
 from core.reporting.allure_metadata import write_allure_metadata
@@ -28,7 +28,6 @@ pytest_plugins = [
 ]
 
 TYPE_MARKERS = ("api", "web_ui", "app", "mini_program")
-PROD_ALIASES = ("prod", "production")
 
 
 def _option_or_env(config, option_name: str, env_key: str, default: str) -> str:
@@ -80,13 +79,13 @@ def pytest_configure(config):
         config.option.clean_alluredir = True  # 直接 pytest 跑时避免跨执行累加旧结果
 
     # ---- 生产环境保护：--allow-prod 与配置开关缺一不可 ----
-    if ctx.env in PROD_ALIASES:
+    if is_prod_env(ctx.env):
         allowed = (config.getoption("--allow-prod")
                    and (ctx.config.get("safety") or {}).get("allow_prod_execution") is True)
         if not allowed:
             raise pytest.UsageError(
-                "[生产环境保护] --env=prod 被拒绝：需要 1) 命令行同时传入 --allow-prod；"
-                "2) 配置文件中 safety.allow_prod_execution: true。")
+                "[生产环境保护] --env={} 被拒绝：需要 1) 命令行同时传入 --allow-prod；"
+                "2) 配置文件中 safety.allow_prod_execution: true。".format(ctx.env))
 
     ctx.output.ensure()
     setup_run_logging(ctx)

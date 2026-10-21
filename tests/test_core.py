@@ -5,7 +5,7 @@ import re
 
 import pytest
 
-from core.config.loader import ConfigError, _subst_env
+from core.config.loader import ConfigError, _subst_env, is_prod_env
 from core.data.factory import call_fake, fake
 from core.logging.redaction import redact
 from core.paths import OutputLayout
@@ -66,6 +66,20 @@ def test_unique_data_is_unique():
     from core.data.isolation import unique_value
     values = {unique_value("u") for _ in range(50)}
     assert len(values) == 50
+
+
+# ---------------- 生产环境识别 ----------------
+
+@pytest.mark.parametrize("env", ["prod", "production", "env_prod", "prod_cn",
+                                 "pre-prod", "PRE_PROD", "PRODUCTION"])
+def test_is_prod_env_detects_prod_variants(env):
+    assert is_prod_env(env) is True
+
+
+@pytest.mark.parametrize("env", ["test", "env_test", "product_test", "staging",
+                                 "reproduce", "dev", ""])
+def test_is_prod_env_ignores_non_prod(env):
+    assert is_prod_env(env) is False
 
 
 # ---------------- 输出目录 ----------------

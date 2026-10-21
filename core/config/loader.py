@@ -12,7 +12,21 @@ from core.paths import OutputLayout, ROOT
 
 ENV_VAR_PATTERN = re.compile(r"\$\{ENV\.([A-Za-z_][A-Za-z0-9_]*)\}")
 
-print(111)#test
+#: 生产环境名关键字（按 _ / - 分词后匹配，避免 "product" 之类被误判为生产环境）
+PROD_ENV_TOKENS = frozenset({"prod", "production", "preprod"})
+
+
+def is_prod_env(env: str) -> bool:
+    """判断环境名是否属于生产环境。
+
+    按 ``_`` / ``-`` 分词后做整词匹配，因此 ``prod``、``production``、``env_prod``、
+    ``prod_cn``、``pre-prod`` 都会被识别为生产环境；而 ``product_test`` 这类
+    含 "prod" 子串但非独立词的环境名不会误判。
+    """
+    tokens = re.split(r"[^A-Za-z0-9]+", str(env or "").strip().lower())
+    return any(tok in PROD_ENV_TOKENS for tok in tokens if tok)
+
+
 class ConfigError(RuntimeError):
     pass
 

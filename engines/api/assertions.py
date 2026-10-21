@@ -1,4 +1,4 @@
-"""统一断言工具：检查路径解析 + 20 种断言类型（validate / setup/teardown assert 共用）。"""
+"""统一断言工具：检查路径解析 + 19 种断言类型（validate / setup-teardown assert 共用）。"""
 from __future__ import annotations
 
 import re
