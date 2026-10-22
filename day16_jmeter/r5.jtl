@@ -1,0 +1,2405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testResults version="1.2">
+<httpSample t="49" it="0" lt="49" ct="14" ts="1792649842172" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649842227" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649842261" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649842294" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="245" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649842327" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="32" ct="1" ts="1792649842361" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649842394" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="0" ts="1792649842428" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649842460" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="245" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649842494" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649842517" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="44" it="0" lt="43" ct="1" ts="1792649842527" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792649842551" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649842571" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792649842592" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649842612" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649842632" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792649842653" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649842673" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649842694" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="38" it="0" lt="38" ct="0" ts="1792649842716" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649842734" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649842755" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649842775" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="42" it="0" lt="42" ct="1" ts="1792649842796" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="42" it="0" lt="42" ct="1" ts="1792649842817" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649842839" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="39" it="0" lt="39" ct="0" ts="1792649842860" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792649842880" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="245" sby="207" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="40" ct="1" ts="1792649842900" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="51" it="0" lt="51" ct="1" ts="1792649842910" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="62" it="0" lt="61" ct="1" ts="1792649842920" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792649842962" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="40" ct="1" ts="1792649842982" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649843002" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843023" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843043" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="40" ct="1" ts="1792649843063" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843084" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843104" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843125" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843145" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="40" ct="1" ts="1792649843165" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="39" ct="1" ts="1792649843186" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843206" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843226" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843247" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843267" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843287" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="245" sby="207" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843308" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="54" it="0" lt="54" ct="1" ts="1792649843314" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="61" it="0" lt="61" ct="1" ts="1792649843328" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843369" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="40" ct="1" ts="1792649843389" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="2" ts="1792649843409" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843430" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649843450" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843471" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649843491" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843512" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843533" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843553" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649843573" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843594" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="39" it="0" lt="39" ct="0" ts="1792649843615" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="39" it="0" lt="39" ct="1" ts="1792649843635" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843655" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843675" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843695" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="245" sby="207" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="0" ts="1792649843715" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="0" ts="1792649843716" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="1" ts="1792649843736" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="1" ts="1792649843756" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649843796" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843817" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="40" ct="1" ts="1792649843837" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649843857" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649843878" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792649843899" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649843919" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843940" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649843960" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649843981" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649844001" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649844022" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792649844043" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792649844064" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649844084" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649844105" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="245" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649844125" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792649844146" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649844187" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649844220" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="245" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649844252" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649844285" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649844319" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="0" ts="1792649844352" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="0" ts="1792649844385" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="32" ct="1" ts="1792649844417" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="245" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649844450" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+
+<httpSample t="56" it="0" lt="55" ct="19" ts="1792655542740" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792655542802" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792655542836" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="242" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="32" ct="1" ts="1792655542869" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792655542902" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="242" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="31" ct="1" ts="1792655542935" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792655542967" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="0" ts="1792655543000" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="66" it="0" lt="66" ct="0" ts="1792655543011" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="64" it="0" lt="64" ct="0" ts="1792655543033" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792655543078" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543098" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543118" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543139" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543159" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792655543180" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543200" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792655543220" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543241" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792655543261" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="38" it="0" lt="38" ct="1" ts="1792655543284" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="39" it="0" lt="39" ct="0" ts="1792655543303" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543323" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543343" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="39" it="0" lt="39" ct="0" ts="1792655543364" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543384" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543404" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="55" it="0" lt="55" ct="0" ts="1792655543410" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="242" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="61" it="0" lt="60" ct="0" ts="1792655543425" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="207" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="61" it="0" lt="61" ct="0" ts="1792655543445" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="242" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="61" it="0" lt="61" ct="1" ts="1792655543465" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="1" ts="1792655543486" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="1" ts="1792655543507" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="207" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="61" it="0" lt="61" ct="1" ts="1792655543527" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="242" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="61" it="0" lt="61" ct="0" ts="1792655543547" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="61" it="0" lt="61" ct="0" ts="1792655543568" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="61" it="0" lt="61" ct="1" ts="1792655543588" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792655543630" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792655543650" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="39" it="0" lt="39" ct="0" ts="1792655543671" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543691" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="40" ct="0" ts="1792655543711" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792655543731" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543752" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792655543773" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="242" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="0" ts="1792655543793" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="46" it="0" lt="46" ct="1" ts="1792655543808" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="62" it="0" lt="61" ct="1" ts="1792655543813" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="242" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="1" ts="1792655543835" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="207" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="1" ts="1792655543855" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="242" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="61" it="0" lt="60" ct="1" ts="1792655543875" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="0" ts="1792655543896" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="0" ts="1792655543916" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="61" it="0" lt="61" ct="1" ts="1792655543936" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655543977" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792655543998" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792655544018" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792655544038" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="40" ct="1" ts="1792655544059" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792655544079" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="39" it="0" lt="39" ct="0" ts="1792655544101" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792655544120" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="0" ts="1792655544141" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="40" ct="1" ts="1792655544162" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792655544182" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="242" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="39" it="0" lt="39" ct="0" ts="1792655544204" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="55" it="0" lt="55" ct="1" ts="1792655544209" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="0" ts="1792655544224" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="242" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="1" ts="1792655544244" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="207" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="1" ts="1792655544264" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="242" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="0" ts="1792655544285" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="1" ts="1792655544305" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="60" it="0" lt="60" ct="1" ts="1792655544325" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="207" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="76" it="0" lt="76" ct="1" ts="1792655544345" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="242" sby="205" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="75" it="0" lt="75" ct="0" ts="1792655544366" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="206" ng="3" na="3">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="76" it="0" lt="75" ct="2" ts="1792655544386" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="61" it="0" lt="61" ct="1" ts="1792655544421" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792655544462" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792655544483" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792655544503" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655544524" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792655544544" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792655544565" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792655544585" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792655544606" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655544626" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792655544647" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655544667" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="0" ts="1792655544688" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655544708" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="242" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="40" it="0" lt="40" ct="1" ts="1792655544728" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="206" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="41" it="0" lt="41" ct="1" ts="1792655544748" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792655544789" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="0" ts="1792655544823" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="242" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792655544856" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792655544889" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792655544922" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792655544955" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="242" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="31" it="0" lt="31" ct="0" ts="1792655544988" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="0" ts="1792655545020" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+
+</testResults>

@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testResults version="1.2">
+<httpSample t="53" it="0" lt="52" ct="18" ts="1792649813682" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649813742" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="1" ts="1792649813775" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-1" dt="text" by="201" sby="203" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649813778" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="245" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="1" ts="1792649813832" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-2" dt="text" by="201" sby="207" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="31" ct="0" ts="1792649813811" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-1" dt="text" by="243" sby="205" ng="2" na="2">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="32" ct="1" ts="1792649813835" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649813868" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="1" ts="1792649813902" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-2" dt="text" by="201" sby="202" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649813905" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-2" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="1" it="0" lt="1" ct="1" ts="1792649814018" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-3" dt="text" by="201" sby="204" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649814020" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649814053" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="245" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649814086" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649814119" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-3" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="2" ts="1792649814221" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="1" ts="1792649814254" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-4" dt="text" by="190" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="0" ts="1792649814257" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="0" ts="1792649814290" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="245" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649814322" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-4" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="0" ts="1792649814424" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649814457" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="1" ts="1792649814489" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-5" dt="text" by="201" sby="203" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649814491" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="245" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649814524" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-5" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="1" it="0" lt="1" ct="0" ts="1792649814625" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-6" dt="text" by="201" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="0" ts="1792649814627" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-6" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649814660" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-6" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="1" it="0" lt="1" ct="1" ts="1792649814693" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-6" dt="text" by="201" sby="202" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649814695" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-6" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="1" ts="1792649814827" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-7" dt="text" by="201" sby="204" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649814829" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-7" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="32" ct="1" ts="1792649814862" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-7" dt="text" by="245" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="0" ts="1792649814896" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-7" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649814928" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-7" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649815028" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-8" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="1" ts="1792649815061" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-8" dt="text" by="190" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649815063" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-8" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649815097" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-8" dt="text" by="245" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="32" ct="1" ts="1792649815131" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-8" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649815217" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-9" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="32" ct="1" ts="1792649815250" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-9" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="1" ts="1792649815283" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-9" dt="text" by="201" sby="203" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="0" ts="1792649815286" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-9" dt="text" by="245" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="1" ts="1792649815318" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-9" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="1" ts="1792649815416" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-10" dt="text" by="201" sby="207" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649815418" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-10" dt="text" by="244" sby="206" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="32" it="0" lt="32" ct="0" ts="1792649815452" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-10" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+<httpSample t="2" it="0" lt="2" ct="1" ts="1792649815485" s="false" lb="POST /orders 下单" rc="400" tn="并发用户组 1-10" dt="text" by="201" sby="202" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: code expected to equal /
+
+****** received  : [[[400]]]
+
+****** comparison: [[[201]]]
+
+/</failureMessage>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>true</failure>
+    <error>false</error>
+    <failureMessage>Test failed: text expected to contain /order_id/</failureMessage>
+  </assertionResult>
+</httpSample>
+<httpSample t="33" it="0" lt="33" ct="1" ts="1792649815487" s="true" lb="POST /orders 下单" rc="201" tn="并发用户组 1-10" dt="text" by="243" sby="205" ng="1" na="1">
+  <assertionResult>
+    <name>断言：状态码 201</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+  <assertionResult>
+    <name>断言：返回体含 order_id</name>
+    <failure>false</failure>
+    <error>false</error>
+  </assertionResult>
+</httpSample>
+
+</testResults>
